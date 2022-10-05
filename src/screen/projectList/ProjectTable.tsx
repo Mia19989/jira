@@ -1,3 +1,4 @@
+import { Table } from "antd";
 import React from "react";
 import { User } from './SearchBar'
 // 项目表格 项目 - 负责人
@@ -18,7 +19,7 @@ interface ProjectTableProps {
 const ProjectTable = ({list, users}: ProjectTableProps) => {
   return (
     <>
-      <table>
+      <Table>
         <thead>
           <tr>
             <th>项目名称</th>
@@ -37,7 +38,7 @@ const ProjectTable = ({list, users}: ProjectTableProps) => {
             })
           }
         </tbody>
-      </table>
+      </Table>
     </> 
   )
 };
