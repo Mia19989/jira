@@ -19,25 +19,24 @@ interface ProjectTableProps {
 const ProjectTable = ({list, users}: ProjectTableProps) => {
   return (
     <>
-      <Table>
-        <thead>
-          <tr>
-            <th>项目名称</th>
-            <th>负责人</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            list.map((project: Project) => {
-              return (
-                <tr key={project.id}>
-                  <th>{project.name}</th>
-                  <th>{users.find((user) => user.id === project.personId)?.name || "未知"}</th>
-                </tr>
-              )
-            })
+      <Table pagination={false} columns={[
+        {
+          title: "项目名称",
+          dataIndex: "name",
+          sorter: (a, b) => a.name.localeCompare(b.name)
+        },
+        {
+          title: "负责人",
+          dataIndex: "id",
+          render(value, project) {
+            return <span>
+              {
+                users.find((user) => user.id === project.personId)?.name || "未知"
+              }
+            </span>
           }
-        </tbody>
+        }
+      ]} dataSource={list}>
       </Table>
     </> 
   )
