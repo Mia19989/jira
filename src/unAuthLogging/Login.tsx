@@ -1,5 +1,6 @@
 import { Form, Button, Input } from "antd";
 import React, { FormEvent } from "react";
+import { LongButton } from ".";
 import { useAuth } from "../context/authContext";
 
 // 登录页面
@@ -20,7 +21,7 @@ const Login = () => {
           <Input type="password" id="password" placeholder="请输入密码" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">登录</Button>
+          <LongButton type="primary" htmlType="submit">登录</LongButton>
         </Form.Item>
       </Form>
     </>

@@ -4,6 +4,7 @@ import App from './App';
 import { loadDevTools } from "jira-dev-tool";
 import 'antd/dist/antd.less';
 import { AuthProviders } from './context';
+import "./App.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
