@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import * as qs from 'qs';
 import ProjectTable from "./ProjectTable";
 import SearchBar from "./SearchBar";
 import { useDebounce, cleanObject, useMount } from "../../utils";
 import { useHttp } from "../../utils/http";
-
-const apiUrl = process.env.REACT_APP_API_URL
 
 const ProjectSys = () => {
   const [params, setParams] = useState({
