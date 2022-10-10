@@ -3,6 +3,7 @@ import ProjectSys from "./screen/projectList";
 import { useAuth } from "./context/authContext";
 import { Button } from "antd";
 import styled from "@emotion/styled";
+import { Row } from "./components/lib";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
@@ -11,8 +12,8 @@ const AuthLogging = () => {
   return (
     <>
       <Container>
-        <Header>
-          <HeaderLeft>
+        <Header spaceBetween>
+          <HeaderLeft marginRight>
             <h3>logo</h3>
             <h3>项目</h3>
             <h3>用户</h3>
@@ -46,19 +47,10 @@ const Container = styled.div`
 `
 // grid-area 给子元素起名
 // 网格面的属性设置唯一值，作为其名称，然后可通过 grid-template-areas 放置
-const Header = styled.header`
+const Header = styled(Row)`
   grid-area: header;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 `
-const HeaderLeft = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`
+const HeaderLeft = styled(Row)``
 const HeaderRight = styled.div``
 const Main = styled.main`grid-area: main;`
 
