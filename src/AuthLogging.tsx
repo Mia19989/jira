@@ -1,25 +1,36 @@
 import React from "react";
 import ProjectSys from "./screen/projectList";
+import { ReactComponent as SoftwareLogo } from "./assets/software-logo.svg";
 import { useAuth } from "./context/authContext";
-import { Button } from "antd";
+import { Menu, Dropdown } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   return (
     <>
       <Container>
         <Header spaceBetween>
           <HeaderLeft marginRight>
-            <h3>logo</h3>
+            <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
             <h3>项目</h3>
             <h3>用户</h3>
           </HeaderLeft>
           <HeaderRight>
-            <Button onClick={() => logout()}>登出</Button>
+          <Dropdown overlay={
+            <Menu>
+              <Menu.Item key={'logout'}>
+                <a href="" onClick={logout}>登出</a>
+              </Menu.Item>
+            </Menu>
+          }>
+          <a onClick={e => e.preventDefault()}>
+            Hi, {user?.name}
+          </a>
+        </Dropdown>
           </HeaderRight>
         </Header>
         <Main>
@@ -49,6 +60,7 @@ const Container = styled.div`
 // 网格面的属性设置唯一值，作为其名称，然后可通过 grid-template-areas 放置
 const Header = styled(Row)`
   grid-area: header;
+  padding: 3.2rem;
 `
 const HeaderLeft = styled(Row)``
 const HeaderRight = styled.div``

@@ -3,6 +3,7 @@ import ProjectTable from "./ProjectTable";
 import SearchBar from "./SearchBar";
 import { useDebounce, cleanObject, useMount } from "../../utils";
 import { useHttp } from "../../utils/http";
+import styled from "@emotion/styled";
 
 const ProjectSys = () => {
   const [params, setParams] = useState({
@@ -39,11 +40,16 @@ const ProjectSys = () => {
   }, [debouncedParams]) // params发生变化 list更新数据
 
   return (
-    <>
+    <Container>
+      <h1>项目列表</h1>
       <SearchBar params={params} setParams={setParams} users={users} />
       <ProjectTable list={list} users={users} />
-    </>
+    </Container>
   )
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`
 
 export default ProjectSys;
