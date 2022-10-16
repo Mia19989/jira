@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { loadDevTools } from "jira-dev-tool";
 import 'antd/dist/antd.less';
-import { AuthProviders } from './context';
+import { AppProviders } from './context';
 import "./App.css";
 
 const root = ReactDOM.createRoot(
@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 loadDevTools(() => {
   root.render(
     <React.StrictMode>
-      <AuthProviders>
+      <AppProviders>
         <App />
-      </AuthProviders>
+      </AppProviders>
     </React.StrictMode>
   );
 })

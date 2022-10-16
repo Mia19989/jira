@@ -2,7 +2,7 @@ import React from "react";
 import ProjectSys from "./screen/projectList";
 import { ReactComponent as SoftwareLogo } from "./assets/software-logo.svg";
 import { useAuth } from "./context/authContext";
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, Button } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
 
@@ -23,13 +23,13 @@ const AuthLogging = () => {
           <Dropdown overlay={
             <Menu>
               <Menu.Item key={'logout'}>
-                <a href="" onClick={logout}>登出</a>
+                <Button type="link" onClick={logout}>登出</Button>
               </Menu.Item>
             </Menu>
           }>
-          <a onClick={e => e.preventDefault()}>
+          <Button type="link" onClick={e => e.preventDefault()}>
             Hi, {user?.name}
-          </a>
+          </Button>
         </Dropdown>
           </HeaderRight>
         </Header>
@@ -61,6 +61,7 @@ const Container = styled.div`
 const Header = styled(Row)`
   grid-area: header;
   padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 `
 const HeaderLeft = styled(Row)``
 const HeaderRight = styled.div``

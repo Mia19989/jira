@@ -28,7 +28,7 @@ export const register = (data: {username: string; password: string}) => {
       // 注册 设置token
       return setLocalStorageItem(await res.json())
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await res.json());
     }
   })
 }
@@ -49,7 +49,8 @@ export const login = (data: {username: string; password: string}) => {
       console.log('data1', data1)
       return data1;
     } else {
-      return Promise.reject(data)
+      // 返回错误信息
+      return Promise.reject(await res.json())
     }
   })
 }

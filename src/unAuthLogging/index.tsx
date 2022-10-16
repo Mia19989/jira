@@ -1,4 +1,4 @@
-import { Button, Card, Divider } from "antd";
+import { Button, Card, Divider, Typography } from "antd";
 import React, { useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
@@ -11,6 +11,7 @@ import right from "../assets/right.svg";
 const UnAuthLogging = () => {
   // 是否注册 默认不注册
   const [isRegister, setIsRegister] = useState<boolean>(false)
+  const [error, setError] = useState<Error | null>();
   return (
     <Container>
       <Header />
@@ -18,14 +19,15 @@ const UnAuthLogging = () => {
       <ShadowCard>
         {/* 根据是否注册 显示注册或者登录 */}
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
+        {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
         {
-          isRegister ? <Register /> : <Login />
+          isRegister ? <Register onError={setError} /> : <Login onError={setError} />
         }
         <Divider />
         {/* 切换注册 登录 */}
-        <a onClick={() => {setIsRegister(!isRegister)}}>
+        <Button type="link" onClick={() => {setIsRegister(!isRegister)}}>
           {isRegister ? '已经有账号了？直接登录' : '还没有账号？注册新账号'}
-        </a>
+        </Button>
       </ShadowCard>
     </Container>
   )

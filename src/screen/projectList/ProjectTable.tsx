@@ -1,10 +1,10 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import React from "react";
 import { User } from './SearchBar'
 import dayjs from "dayjs";
 // 项目表格 项目 - 负责人
 
-interface Project {
+export interface Project {
   id: string;
   name: string;
   personId: string;
@@ -12,12 +12,11 @@ interface Project {
   created: number;
 }
 
-interface ProjectTableProps {
-  list: Project[];
+interface ProjectTableProps extends TableProps<Project> {
   users: User[];
 }
 
-const ProjectTable = ({list, users}: ProjectTableProps) => {
+const ProjectTable = ({users, ...props}: ProjectTableProps) => {
   return (
     <>
       <Table pagination={false} columns={[
@@ -52,7 +51,8 @@ const ProjectTable = ({list, users}: ProjectTableProps) => {
             </span>
           }
         }
-      ]} dataSource={list}>
+      ]}
+      {...props}>
       </Table>
     </> 
   )
