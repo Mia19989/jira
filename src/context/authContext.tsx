@@ -1,8 +1,10 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from '../auth-provider';
+import { FullPageError, FullPageLoading } from "../components/lib";
 import { User } from "../screen/projectList/SearchBar";
 import { useMount } from "../utils";
 import { http } from "../utils/http";
+import { useAsync } from "../utils/use-async";
 
 interface ValParams {
   user: User | null;
@@ -37,7 +39,8 @@ interface UserParams {
 };
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
+  const {isLoading, isIdle, isError, error, run, data: user, setData: setUser} = useAsync<User | null>()
 
   const login = (params: UserParams) => auth.login(params).then((user) => {setUser(user);});
 
@@ -46,8 +49,19 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   const logout = () => auth.logout().then(() => {setUser(null)});
 
   useMount(() => {
-    bootstrapUser().then((user) => {setUser(user)})
+    run(bootstrapUser())
   })
+
+  // 查看是否登录过的 加载页面
+  if (isIdle || isLoading) {
+    return <FullPageLoading />
+  }
+
+  // 错误页面 提示错误
+  if (isError) {
+    return <FullPageError error={error}/>
+  }
+
 // 这里为什么导出一个组件  噢噢 导出provider
   return <AuthContext.Provider children={children} value={{user, login, register, logout}}></AuthContext.Provider>
 };

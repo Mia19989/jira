@@ -7,7 +7,6 @@ import logo from "../assets/logo.svg";
 import left from "../assets/left.svg";
 import right from "../assets/right.svg";
 
-
 const UnAuthLogging = () => {
   // 是否注册 默认不注册
   const [isRegister, setIsRegister] = useState<boolean>(false)
