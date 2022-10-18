@@ -5,10 +5,13 @@ import { useAuth } from "./context/authContext";
 import { Menu, Dropdown, Button } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
+import { useDocumentTitle } from "./utils";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
   const { logout, user } = useAuth();
+
+  useDocumentTitle('项目列表', false)
 
   return (
     <>

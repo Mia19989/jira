@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // 清除对象中的空值 null undefined
 // 返回值 类型推断
@@ -62,4 +62,24 @@ export const useArray = <T>(initialArray: T[]) => {
       setValue([...value, item])
     }
   }
+}
+
+// 设置页面title  参数keepOnUnmount 表示卸载时，是否显示oldTitle
+export const useDocumentTitle = (title: string, keepOnUnmount: boolean = true) => {
+  // 使用useRef 利用useRef保存oldTitle useRef保存的对象是在整个组件生命周期持续存在
+  const oldTitle = useRef(document.title).current;
+  // 页面加载时 旧title
+  // 页面刷新时 新title
+
+  useEffect(() => {
+    document.title = title
+  }, [title])
+
+  useEffect(() => {
+    if (!keepOnUnmount) { // false 不保持卸载时的title 使用oldTitle
+      return function unMounted() {
+        document.title = oldTitle;
+      }
+    }
+  }, [keepOnUnmount, oldTitle])
 }
