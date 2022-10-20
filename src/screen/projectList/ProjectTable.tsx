@@ -2,6 +2,7 @@ import { Table, TableProps } from "antd";
 import React from "react";
 import { User } from './SearchBar'
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 // 项目表格 项目 - 负责人
 
 export interface Project {
@@ -17,13 +18,19 @@ interface ProjectTableProps extends TableProps<Project> {
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
+
   return (
     <>
       <Table pagination={false} columns={[
         {
           title: "项目名称",
-          dataIndex: "name",
-          sorter: (a, b) => a.name.localeCompare(b.name)
+          // dataIndex: "name",
+          sorter: (a, b) => a.name.localeCompare(b.name),
+          render(val, project) {
+            return (
+              <Link to={String(project.id)}>{project.name}</Link>
+            )
+          }
         },
         {
           title: "部门",

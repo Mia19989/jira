@@ -5,6 +5,7 @@ import { loadDevTools } from "jira-dev-tool";
 import 'antd/dist/antd.less';
 import { AppProviders } from './context';
 import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 loadDevTools(() => {
   root.render(
     <React.StrictMode>
-      <AppProviders>
-        <App />
-      </AppProviders>
+      {/* <Router> */}
+        <AppProviders>
+          <App />
+        </AppProviders>
+      {/* </Router> */}
     </React.StrictMode>
   );
 })
