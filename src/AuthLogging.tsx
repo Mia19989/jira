@@ -5,7 +5,7 @@ import { useAuth } from "./context/authContext";
 import { Menu, Dropdown, Button } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
-import { useDocumentTitle } from "./utils";
+import { resetRoute, useDocumentTitle } from "./utils";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { ProjectScreen } from "./screen/projectScreen";
@@ -37,7 +37,9 @@ const PageHeader = () => {
   return (
     <Header spaceBetween>
       <HeaderLeft marginRight>
-        <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
+        <Button type="link" onClick={resetRoute}>
+          <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
+        </Button>
         <h3>项目</h3>
         <h3>用户</h3>
       </HeaderLeft>
