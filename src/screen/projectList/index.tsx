@@ -6,18 +6,21 @@ import { Typography } from "antd";
 import { useProject } from "../../utils/project";
 import { useUser } from "../../utils/user";
 import { useDebounce } from "../../utils";
+import { useUrlQueryParams } from "../../utils/url";
 
 const ProjectSys = () => {
-  const [params, setParams] = useState({
-    name: '', // 项目名称
-    personId: '' // 对应的负责人
-  })
+  // const [, setParams] = useState({
+  //   name: '', // 项目名称
+  //   personId: '' // 对应的负责人
+  // })
   // const [list, setList] = useState([])
   // const [users, setUsers] = useState([])
 
   // 项目列表加载时 显示的loading
   // const [loading, setLoading] = useState<boolean>(true)
   // const {run, isLoading, data: list, error} = useAsync<Project[]>();
+  const [params, setParams] = useUrlQueryParams(['name', 'personId']);
+  
   const debouncedVal = useDebounce(params, 200);
   const {isLoading, data: list, error} = useProject(debouncedVal);
   const { data: users } = useUser()

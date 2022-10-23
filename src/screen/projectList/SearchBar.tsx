@@ -35,7 +35,7 @@ const SearchBar = ({ params, setParams, users }: SearchBarProps) => {
           {
             users.map((user: User) => {
               return (
-                <Select.Option key={user.id} value={user.id}>{user.name}</Select.Option>
+                <Select.Option key={user.id} value={String(user.id)}>{user.name}</Select.Option>
               )
             }) 
           }
