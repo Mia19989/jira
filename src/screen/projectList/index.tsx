@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProject } from "../../utils/project";
 import { useUser } from "../../utils/user";
-import { useDebounce } from "../../utils";
-import { useUrlQueryParams } from "../../utils/url";
+import { useDebounce, useDocumentTitle } from "../../utils";
+import { useProjectsSearchParams } from "./utils";
 
 const ProjectSys = () => {
   // const [, setParams] = useState({
@@ -19,8 +19,8 @@ const ProjectSys = () => {
   // 项目列表加载时 显示的loading
   // const [loading, setLoading] = useState<boolean>(true)
   // const {run, isLoading, data: list, error} = useAsync<Project[]>();
-  const [params, setParams] = useUrlQueryParams(['name', 'personId']);
-  
+  useDocumentTitle('项目列表', false);
+  const [params, setParams] = useProjectsSearchParams();
   const debouncedVal = useDebounce(params, 200);
   const {isLoading, data: list, error} = useProject(debouncedVal);
   const { data: users } = useUser()

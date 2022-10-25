@@ -8,7 +8,7 @@ export interface IdSelectProps extends Omit<SelectProprs, 'value' | 'onChange' |
   value: Raw | null | undefined; // select组件上的value
   onChange: (value?: number) => void; // onChange事件 只会回调number和undefined类型
   defaultOptionName?: string; // 默认的选项 
-  options?: {name: string; personId: number}[]; // 选项 
+  options?: {name: string; id: number}[]; // 选项 
 };
 
 /**
@@ -23,13 +23,13 @@ export const IdSelect = (props: IdSelectProps) => {
   return (
     <Select
     {...restProps}
-    value={toNumber(value)} 
+    value={options?.length ? toNumber(value) : 0} 
     onChange={value => onChange(toNumber(value) || undefined)}>
       {
         defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
       }
       {
-        options?.map((option) => <Select.Option key={option.personId} value={option.personId}>{option.name}</Select.Option>)
+        options?.map((option) => <Select.Option key={option.id} value={option.id}>{option.name}</Select.Option>)
       }
     </Select>
   )

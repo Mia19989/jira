@@ -1,18 +1,21 @@
 import React from "react";
-import { Form, Input, Select } from "antd";
+import { Form, Input } from "antd";
+import { Project } from "./ProjectTable";
+import { UserSelect } from "../../components/user-select";
 
 // 搜索框
 export interface User {
-  id: string;
+  id: number;
   name: string;
   token: string;
 }
 
 interface SearchBarProps {
-  params: {
-    name: string;
-    personId: string;
-  };
+  params: Partial<Pick<Project, 'name' | 'personId'>>;
+  // params: {
+  //   name: string;
+  //   personId: string;
+  // };
   setParams: (params: SearchBarProps['params']) => void;
   users: User[];
 }
@@ -27,7 +30,14 @@ const SearchBar = ({ params, setParams, users }: SearchBarProps) => {
         })}/>
       </Form.Item>
       <Form.Item>
-        <Select value={params.personId} onChange={value => setParams({
+        <UserSelect
+          defaultOptionName={'负责人'}
+          value={params.personId} 
+          onChange={(value: number) => setParams({
+          ...params,
+          personId: value
+        })}></UserSelect>
+        {/* <Select value={params.personId} onChange={value => setParams({
           ...params,
           personId: value
         })}>
@@ -39,7 +49,7 @@ const SearchBar = ({ params, setParams, users }: SearchBarProps) => {
               )
             }) 
           }
-        </Select>
+        </Select> */}
       </Form.Item>
     </Form>
   )

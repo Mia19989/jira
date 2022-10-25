@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 // 项目表格 项目 - 负责人
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
-  personId: string;
+  personId: number;
   organization: string;
   created: number;
 }
