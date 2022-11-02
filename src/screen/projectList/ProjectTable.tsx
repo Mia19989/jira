@@ -3,6 +3,8 @@ import React from "react";
 import { User } from './SearchBar'
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import Pin from "../../components/pin";
+import { useEditProject } from "../../utils/project";
 // 项目表格 项目 - 负责人
 
 export interface Project {
@@ -11,6 +13,7 @@ export interface Project {
   personId: number;
   organization: string;
   created: number;
+  pin: boolean;
 }
 
 interface ProjectTableProps extends TableProps<Project> {
@@ -18,10 +21,24 @@ interface ProjectTableProps extends TableProps<Project> {
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
+  const { mutate } = useEditProject();
+  // 柯里化
+  const pinProject = (id: number) => (pin: boolean) => {
+    mutate({id, pin})
+  };
 
   return (
     <>
       <Table pagination={false} columns={[
+        {
+          title: <Pin checked={true} disabled={true} />,
+          render(val, project) {
+            return (
+              // onCheckedChange 改变被选中的project中的pin属性值
+              <Pin checked={project.pin} onCheckedChange={pinProject(project.id)}  />
+            )
+          }
+        },
         {
           title: "项目名称",
           // dataIndex: "name",

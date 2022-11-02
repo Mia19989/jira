@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProjectTable from "./ProjectTable";
 import SearchBar from "./SearchBar";
 import styled from "@emotion/styled";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import { useProject } from "../../utils/project";
 import { useUser } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
@@ -22,7 +22,7 @@ const ProjectSys = () => {
   useDocumentTitle('项目列表', false);
   const [params, setParams] = useProjectsSearchParams();
   const debouncedVal = useDebounce(params, 200);
-  const {isLoading, data: list, error} = useProject(debouncedVal);
+  const {isLoading, data: list, error, retry} = useProject(debouncedVal);
   const { data: users } = useUser()
 
   // 使用hook封装请求 自动添加上登录信息token
@@ -62,6 +62,7 @@ const ProjectSys = () => {
   return (
     <Container>
       <h1>项目列表</h1>
+      <Button onClick={retry}>retry</Button>
       <SearchBar params={params} setParams={setParams} users={users || []} />
       {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
       <ProjectTable dataSource={list || []} loading={isLoading} users={users || []} />

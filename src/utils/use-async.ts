@@ -28,6 +28,11 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     ...initialState
   })
 
+  // useState保存retry
+  const [retry, setRetry] = useState(() => () => {
+
+  })
+
 
   // 更改数据 函数 
   const setData = (data: D) => {
@@ -48,11 +53,19 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   }
 
   // 异步请求 
-  const run = (promise: Promise<D>) => {
+  const run = (promise: Promise<D>, retryConfig?: {retry: () => Promise<D>}) => {
     // 不是promise请求
     if (!promise || !promise.then()) {
       throw new Error('请传入 promise 类型数据')
     }
+
+    // 重新跑一遍上次的run(oldPromise)
+    setRetry(() => () => {
+      console.log('set retry');
+      if (retryConfig?.retry) {
+        run(retryConfig?.retry(), retryConfig)
+      }
+    })
 
     // 正在加载
     setState({
@@ -63,6 +76,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     return promise
     .then(data => {
       setData(data);
+      console.log('run promise')
       return data;
     })
     .catch(error => {
@@ -84,6 +98,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     setError,
     setData,
     run,
+    retry,
     ...state
   }
 }
