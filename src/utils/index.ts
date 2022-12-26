@@ -39,7 +39,7 @@ export const useDebounce = <V>(value: V, delay?: number): any => {
 export const useMount = (callback: () => void) => {
   // 忽略下一行eslint警告
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(callback, [])
+  useEffect(callback, []);
 }
 
 // persons: {name: string, age: number}[]

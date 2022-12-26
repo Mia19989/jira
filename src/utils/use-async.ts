@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from ".";
 
 interface State<D> {
@@ -33,30 +33,28 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   const mountedRef = useMountedRef();
 
   // useState保存retry
-  const [retry, setRetry] = useState(() => () => {
-
-  })
+  const [retry, setRetry] = useState(() => () => {});
 
   // 更改数据 函数 
-  const setData = (data: D) => {
+  const setData = useCallback((data: D) => {
     setState({
       data,
       stat: 'success',
       error: null
     })
-  }
+  }, []);
 
   // 发生错误
-  const setError = (error: Error) => {
+  const setError = useCallback((error: Error) => {
     setState({
       error,
       stat: 'error',
       data: null
     })
-  }
+  }, []);
 
   // 异步请求 
-  const run = (promise: Promise<D>, retryConfig?: {retry: () => Promise<D>}) => {
+  const run = useCallback((promise: Promise<D>, retryConfig?: {retry: () => Promise<D>}) => {
     // 不是promise请求
     if (!promise || !promise.then()) {
       throw new Error('请传入 promise 类型数据')
@@ -71,10 +69,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     })
 
     // 正在加载
-    setState({
-      ...state,
-      stat: 'loading'
-    })
+    setState(preState => ({ ...preState, stat: 'loading', }));
 
     return promise
     .then(data => {
@@ -91,7 +86,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
       }
       return error
     })
-  }
+  }, [config.throwOnError, mountedRef, setData, setError]);
 
   return {
     isIdle: state.stat === 'idle',
