@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from ".";
 
 interface State<D> {
   // 状态
@@ -27,6 +28,9 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     ...defaultInitialState,
     ...initialState
   })
+
+  /** 组件是否挂载 */
+  const mountedRef = useMountedRef();
 
   // useState保存retry
   const [retry, setRetry] = useState(() => () => {
@@ -74,7 +78,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
 
     return promise
     .then(data => {
-      setData(data);
+      if (mountedRef.current)
+        setData(data);
       console.log('run promise,', data);
       return data;
     })

@@ -85,3 +85,22 @@ export const useDocumentTitle = (title: string, keepOnUnmount: boolean = true) =
 }
 
 export const resetRoute = () => window.location.href = window.location.origin; 
+
+/** 
+ * 组件是否挂载 - 解决刷新中途退出，列表数据设置的报错
+ * 默认还没有被挂载/已经卸载false 反之true 
+ */
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    mountedRef.current = true;
+
+    // 组件被卸载
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+
+  return mountedRef;
+};
