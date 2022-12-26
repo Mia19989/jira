@@ -62,10 +62,9 @@ const ProjectSys = () => {
   return (
     <Container>
       <h1>项目列表</h1>
-      <Button onClick={retry}>retry</Button>
       <SearchBar params={params} setParams={setParams} users={users || []} />
       {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
-      <ProjectTable dataSource={list || []} loading={isLoading} users={users || []} />
+      <ProjectTable refresh={retry} dataSource={list || []} loading={isLoading} users={users || []} />
     </Container>
   )
 };

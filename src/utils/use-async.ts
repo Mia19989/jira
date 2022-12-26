@@ -33,7 +33,6 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
 
   })
 
-
   // 更改数据 函数 
   const setData = (data: D) => {
     setState({
@@ -76,7 +75,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     return promise
     .then(data => {
       setData(data);
-      console.log('run promise')
+      console.log('run promise,', data);
       return data;
     })
     .catch(error => {

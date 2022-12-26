@@ -15,7 +15,7 @@ export const http = (endpoint: string, {data, token, headers, ...otherConfig}: C
     method: 'GET',
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': data ? 'application/jaon' : ''
+      'Content-Type': data ? 'application/json' : ''
     },
     ...otherConfig
   }
@@ -24,12 +24,12 @@ export const http = (endpoint: string, {data, token, headers, ...otherConfig}: C
   if ( config.method === 'GET') {
     // 请求数据在 url中
     endpoint += `?${qs.stringify(data)}`
-  } else {
+  } else { // PATCH
     // post请求 请求数据在body中
     config.body = JSON.stringify(data || {});
   }
 
-  return fetch(`${apiUrl}/${endpoint}`, config).then(async res => {
+  return window.fetch(`${apiUrl}/${endpoint}`, config).then(async res => {
     if (res.status === 401) {
       // 没有token 登录失败
       console.log('登陆失败，没有token', res)
@@ -40,7 +40,6 @@ export const http = (endpoint: string, {data, token, headers, ...otherConfig}: C
     }
     const data = await res.json();
     if (res.ok) {
-      console.log('登录成功', data)
       return data
     } else {
       return Promise.reject(data);

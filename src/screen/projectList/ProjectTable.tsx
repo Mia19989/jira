@@ -18,14 +18,15 @@ export interface Project {
 
 interface ProjectTableProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
   const { mutate } = useEditProject();
   // 柯里化
   const pinProject = (id: number) => (pin: boolean) => {
-    mutate({id, pin})
-  };
+    mutate({id, pin}).then(props.refresh);
+  }
 
   return (
     <>

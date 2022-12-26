@@ -28,10 +28,11 @@ export const useEditProject = () => {
   
   // 用封装的请求 对project进行修改
   const mutate = (params: Partial<Project>) => {
-    return run(client(`projects/${params.id}`, {
-      data: params,
+    const res = client(`projects/${params.id}`, {
+      data: cleanObject(params || {}),
       method: 'PATCH'
-    }))
+      });
+    return run(res);
   }
 
   return {
