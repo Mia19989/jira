@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProjectSys from "./screen/projectList";
 import { ReactComponent as SoftwareLogo } from "./assets/software-logo.svg";
 import { useAuth } from "./context/authContext";
@@ -9,15 +9,18 @@ import { resetRoute, useDocumentTitle } from "./utils";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { ProjectScreen } from "./screen/projectScreen";
+import ProjectModal from "./screen/projectList/projectModal";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
-  useDocumentTitle('项目列表', false)
+  useDocumentTitle('项目列表', false);
+  const [modalVisibal, setModalVisibal] = useState(false);
 
   return (
     <>
       <Container>
         <PageHeader />
+        <Button onClick={() => setModalVisibal(true)}>打开</Button>
         <Main>
           <Router>
             <Routes>
@@ -27,13 +30,28 @@ const AuthLogging = () => {
             </Routes>
           </Router>
         </Main>
+        <ProjectModal open={modalVisibal} onClose={() => setModalVisibal(false)} />
       </Container>
     </>
   );
 };
 
-const PageHeader = () => {
+const User = () => {
   const { logout, user } = useAuth();
+  return <Dropdown overlay={
+    <Menu>
+      <Menu.Item key={'logout'}>
+        <Button type="link" onClick={logout}>登出</Button>
+      </Menu.Item>
+    </Menu>
+  }>
+    <Button type="link" onClick={e => e.preventDefault()}>
+      Hi, {user?.name}
+    </Button>
+  </Dropdown>
+}
+
+const PageHeader = () => {
   return (
     <Header spaceBetween>
       <HeaderLeft marginRight>
@@ -44,17 +62,7 @@ const PageHeader = () => {
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
-      <Dropdown overlay={
-        <Menu>
-          <Menu.Item key={'logout'}>
-            <Button type="link" onClick={logout}>登出</Button>
-          </Menu.Item>
-        </Menu>
-      }>
-      <Button type="link" onClick={e => e.preventDefault()}>
-        Hi, {user?.name}
-      </Button>
-    </Dropdown>
+        <User />
       </HeaderRight>
     </Header>
   )
