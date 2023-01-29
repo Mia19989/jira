@@ -4,12 +4,13 @@ import { ReactComponent as SoftwareLogo } from "./assets/software-logo.svg";
 import { useAuth } from "./context/authContext";
 import { Menu, Dropdown, Button } from "antd";
 import styled from "@emotion/styled";
-import { Row } from "./components/lib";
+import { ButtonNoPadding, Row } from "./components/lib";
 import { resetRoute, useDocumentTitle } from "./utils";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { ProjectScreen } from "./screen/projectScreen";
 import ProjectModal from "./screen/projectList/projectModal";
+import ProjectPopover from "./components/projectPopover";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
@@ -19,8 +20,8 @@ const AuthLogging = () => {
   return (
     <>
       <Container>
-        <PageHeader />
-        <Button onClick={() => setModalVisibal(true)}>打开</Button>
+        <PageHeader setProjectModalOpen={setModalVisibal} />
+        {/* <Button onClick={() => setModalVisibal(true)}>打开</Button> */}
         <Main>
           <Router>
             <Routes>
@@ -51,14 +52,14 @@ const User = () => {
   </Dropdown>
 }
 
-const PageHeader = () => {
+const PageHeader = (props: {setProjectModalOpen: (visible: boolean) => void}) => {
   return (
     <Header spaceBetween>
       <HeaderLeft marginRight>
-        <Button type="link" onClick={resetRoute}>
+        <ButtonNoPadding type="link" onClick={resetRoute}>
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
-        </Button>
-        <h3>项目</h3>
+        </ButtonNoPadding>
+        <ProjectPopover setProjectModalOpen={props?.setProjectModalOpen} />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
