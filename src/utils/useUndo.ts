@@ -25,6 +25,9 @@ export const useUndo = <T>(initialPresent: T) => {
     })
   }, []);
 
+  const canUndo = state.past.length !== 0;
+  const canRedo = state.future.length !== 0;
+
   /** 重置 */
   const reset = useCallback((newPresent: T) => {
     setState(() => {
@@ -54,7 +57,7 @@ export const useUndo = <T>(initialPresent: T) => {
   }, []);
 
   /** 往前 */
-  const cando = useCallback(() => {
+  const redo = useCallback(() => {
     setState((currentState) => {
       const {past, present, future} = currentState;
 
@@ -72,6 +75,6 @@ export const useUndo = <T>(initialPresent: T) => {
 
   return [
     state,
-    {set, reset, undo, cando}
+    {canUndo, canRedo, set, reset, undo, redo}
   ] as const;
 }
