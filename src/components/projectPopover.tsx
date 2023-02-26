@@ -1,10 +1,9 @@
 import { List, Popover, Typography } from "antd";
 import React from "react";
 import { useProject } from "../utils/project";
-import { ButtonNoPadding } from "./lib";
 
 /** 气泡卡片 */
-const ProjectPopover = (props: {setProjectModalOpen: (visible: boolean) => void}) => {
+const ProjectPopover = (props: {projectButton: JSX.Element}) => {
   // 项目列表数据
   const { data: projects, isLoading } = useProject();
   /** 收藏的项目 */
@@ -18,7 +17,7 @@ const ProjectPopover = (props: {setProjectModalOpen: (visible: boolean) => void}
       <List.Item>{item?.name}</List.Item>
       )}
     />
-    <ButtonNoPadding type="link" onClick={() => props?.setProjectModalOpen(true)}>创建项目</ButtonNoPadding>
+    {props?.projectButton}
   </div>
 
   return <Popover placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >

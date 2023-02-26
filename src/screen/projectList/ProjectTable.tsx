@@ -20,7 +20,7 @@ export interface Project {
 interface ProjectTableProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  setProjectModalOpen: (visible: boolean) => void;
+  projectButton: JSX.Element;
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
@@ -32,7 +32,7 @@ const ProjectTable = ({users, ...props}: ProjectTableProps) => {
 
   const items: MenuProps['items'] = [
     {
-      label: <ButtonNoPadding type="link" onClick={() => props.setProjectModalOpen(true)}>编辑</ButtonNoPadding>,
+      label: props.projectButton,
       key: 'edit',
     }
   ];

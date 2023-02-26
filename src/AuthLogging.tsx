@@ -20,12 +20,18 @@ const AuthLogging = () => {
   return (
     <>
       <Container>
-        <PageHeader setProjectModalOpen={setModalVisibal} />
+        <PageHeader projectButton={
+          <ButtonNoPadding type="link" onClick={() => setModalVisibal(true)}>创建项目</ButtonNoPadding>}
+        />
         {/* <Button onClick={() => setModalVisibal(true)}>打开</Button> */}
         <Main>
           <Router>
             <Routes>
-              <Route path="/projects" element={<ProjectSys setProjectModalOpen={setModalVisibal}/>}></Route>
+              <Route path="/projects" element={
+                <ProjectSys projectButton={
+                  <ButtonNoPadding type="link" onClick={() => setModalVisibal(true)}>创建项目</ButtonNoPadding>}
+                />}>
+              </Route>
               <Route path="/projects/:projectId/*" element={<ProjectScreen />}></Route>
               <Route path="*" element={<Navigate to="/projects" replace={true} />}></Route>
             </Routes>
@@ -52,14 +58,14 @@ const User = () => {
   </Dropdown>
 }
 
-const PageHeader = (props: {setProjectModalOpen: (visible: boolean) => void}) => {
+const PageHeader = (props: {projectButton: JSX.Element}) => {
   return (
     <Header spaceBetween>
       <HeaderLeft marginRight>
         <ButtonNoPadding type="link" onClick={resetRoute}>
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
         </ButtonNoPadding>
-        <ProjectPopover setProjectModalOpen={props?.setProjectModalOpen} />
+        <ProjectPopover projectButton={props.projectButton} />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
