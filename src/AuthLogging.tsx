@@ -25,7 +25,7 @@ const AuthLogging = () => {
         <Main>
           <Router>
             <Routes>
-              <Route path="/projects" element={<ProjectSys />}></Route>
+              <Route path="/projects" element={<ProjectSys setProjectModalOpen={setModalVisibal}/>}></Route>
               <Route path="/projects/:projectId/*" element={<ProjectScreen />}></Route>
               <Route path="*" element={<Navigate to="/projects" replace={true} />}></Route>
             </Routes>

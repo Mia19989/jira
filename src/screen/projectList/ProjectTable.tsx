@@ -1,10 +1,11 @@
-import { Table, TableProps } from "antd";
+import { Dropdown, Menu, MenuProps, Table, TableProps } from "antd";
 import React from "react";
 import { User } from './SearchBar'
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Pin from "../../components/pin";
 import { useEditProject } from "../../utils/project";
+import { ButtonNoPadding } from "../../components/lib";
 // 项目表格 项目 - 负责人
 
 export interface Project {
@@ -19,6 +20,7 @@ export interface Project {
 interface ProjectTableProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
+  setProjectModalOpen: (visible: boolean) => void;
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
@@ -27,6 +29,13 @@ const ProjectTable = ({users, ...props}: ProjectTableProps) => {
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({id, pin}).then(props.refresh);
   }
+
+  const items: MenuProps['items'] = [
+    {
+      label: <ButtonNoPadding type="link" onClick={() => props.setProjectModalOpen(true)}>编辑</ButtonNoPadding>,
+      key: 'edit',
+    }
+  ];
 
   return (
     <>
@@ -74,6 +83,16 @@ const ProjectTable = ({users, ...props}: ProjectTableProps) => {
                 project.created ? dayjs(project.created).format('YYYY-MM-DD') : "无"
               }
             </span>
+          }
+        },
+        {
+          title: "操作",
+          render(val, project) {
+            return (
+              <Dropdown menu={{items}} trigger={['click']}>
+                <ButtonNoPadding type="link">...</ButtonNoPadding>
+              </Dropdown>
+            )
           }
         }
       ]}

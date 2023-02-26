@@ -7,8 +7,9 @@ import { useProject } from "../../utils/project";
 import { useUser } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjectsSearchParams } from "./utils";
+import { Row } from "../../components/lib";
 
-const ProjectSys = () => {
+const ProjectSys = (props: {setProjectModalOpen: (visible: boolean) => void}) => {
   // const [, setParams] = useState({
   //   name: '', // 项目名称
   //   personId: '' // 对应的负责人
@@ -61,10 +62,13 @@ const ProjectSys = () => {
 
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row spaceBetween>
+        <h1>项目列表</h1>
+        <Button onClick={() => props?.setProjectModalOpen(true)}>创建项目</Button>
+      </Row>
       <SearchBar params={params} setParams={setParams} users={users || []} />
       {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
-      <ProjectTable refresh={retry} dataSource={list || []} loading={isLoading} users={users || []} />
+      <ProjectTable setProjectModalOpen={props?.setProjectModalOpen} refresh={retry} dataSource={list || []} loading={isLoading} users={users || []} />
     </Container>
   )
 };
