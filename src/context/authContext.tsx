@@ -4,7 +4,7 @@ import { FullPageError, FullPageLoading } from "../components/lib";
 import { User } from "../screen/projectList/SearchBar";
 import { useMount } from "../utils";
 import { http } from "../utils/http";
-import { useAsync } from "../utils/use-async";
+import { useAsync } from "../utils/useAsync";
 
 interface ValParams {
   user: User | null;

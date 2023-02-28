@@ -1,9 +1,14 @@
 import { List, Popover, Typography } from "antd";
 import React from "react";
 import { useProject } from "../utils/project";
+import { useDispatch } from 'react-redux';
+import { ButtonNoPadding } from "./lib";
+import { projectListActions } from "../screen/projectList/projectList.slice";
 
 /** 气泡卡片 */
-const ProjectPopover = (props: {projectButton: JSX.Element}) => {
+const ProjectPopover = () => {
+  const dispatch = useDispatch();
+  
   // 项目列表数据
   const { data: projects, isLoading } = useProject();
   /** 收藏的项目 */
@@ -17,7 +22,7 @@ const ProjectPopover = (props: {projectButton: JSX.Element}) => {
       <List.Item>{item?.name}</List.Item>
       )}
     />
-    {props?.projectButton}
+    <ButtonNoPadding type='link' onClick={() => dispatch(projectListActions.openProjectModal())}>创建项目</ButtonNoPadding>
   </div>
 
   return <Popover placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >

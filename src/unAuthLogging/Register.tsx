@@ -2,7 +2,7 @@ import { Form, Input } from "antd";
 import React from "react";
 import { LongButton } from ".";
 import { useAuth } from "../context/authContext";
-import { useAsync } from "../utils/use-async";
+import { useAsync } from "../utils/useAsync";
 
 // 注册页面
 const Register = ({onError}: { onError: (error: Error) => void}) => {

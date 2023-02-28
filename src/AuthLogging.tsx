@@ -1,43 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router";
+import { Menu, Dropdown, Button } from "antd";
 import ProjectSys from "./screen/projectList";
 import { ReactComponent as SoftwareLogo } from "./assets/software-logo.svg";
 import { useAuth } from "./context/authContext";
-import { Menu, Dropdown, Button } from "antd";
-import styled from "@emotion/styled";
 import { ButtonNoPadding, Row } from "./components/lib";
 import { resetRoute, useDocumentTitle } from "./utils";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Routes, Route, Navigate } from "react-router";
 import { ProjectScreen } from "./screen/projectScreen";
 import ProjectModal from "./screen/projectList/projectModal";
 import ProjectPopover from "./components/projectPopover";
+import styled from "@emotion/styled";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
   useDocumentTitle('项目列表', false);
-  const [modalVisibal, setModalVisibal] = useState(false);
 
   return (
     <>
       <Container>
-        <PageHeader projectButton={
-          <ButtonNoPadding type="link" onClick={() => setModalVisibal(true)}>创建项目</ButtonNoPadding>}
-        />
-        {/* <Button onClick={() => setModalVisibal(true)}>打开</Button> */}
+        <PageHeader/>
         <Main>
           <Router>
             <Routes>
-              <Route path="/projects" element={
-                <ProjectSys projectButton={
-                  <ButtonNoPadding type="link" onClick={() => setModalVisibal(true)}>创建项目</ButtonNoPadding>}
-                />}>
+              <Route path="/projects" element={<ProjectSys />}>
               </Route>
               <Route path="/projects/:projectId/*" element={<ProjectScreen />}></Route>
               <Route path="*" element={<Navigate to="/projects" replace={true} />}></Route>
             </Routes>
           </Router>
         </Main>
-        <ProjectModal open={modalVisibal} onClose={() => setModalVisibal(false)} />
+        <ProjectModal />
       </Container>
     </>
   );
@@ -58,14 +51,14 @@ const User = () => {
   </Dropdown>
 }
 
-const PageHeader = (props: {projectButton: JSX.Element}) => {
+const PageHeader = () => {
   return (
     <Header spaceBetween>
       <HeaderLeft marginRight>
         <ButtonNoPadding type="link" onClick={resetRoute}>
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
         </ButtonNoPadding>
-        <ProjectPopover projectButton={props.projectButton} />
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
