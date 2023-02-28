@@ -2,7 +2,7 @@ import { Form, Input } from "antd";
 import React from "react";
 import { LongButton } from ".";
 import { useAuth } from "../context/authContext";
-import { useAsync } from "../utils/use-async";
+import { useAsync } from "../utils/useAsync";
 
 // 登录页面
 const Login = ({onError}: {onError: (error: Error) => void}) => {

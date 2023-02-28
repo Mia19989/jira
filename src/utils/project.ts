@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import { cleanObject } from ".";
 import { Project } from "../screen/projectList/ProjectTable";
 import { useHttp } from "./http";
-import { useAsync } from "./use-async";
+import { useAsync } from "./useAsync";
 
 export const useProject = (params?: Partial<Project>) => {
   const client = useHttp();
