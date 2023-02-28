@@ -9,7 +9,7 @@ export const getLocalStorageItem = () => window.localStorage.getItem(key)
 
 // 为user设置token
 export const setLocalStorageItem = ({user}: {user: User}) => {
-  window.localStorage.setItem(key, user.token)
+  window.localStorage.setItem(key, user.token || '')
   console.log('user', user);
   return user
 }
@@ -24,8 +24,7 @@ export const register = (data: {username: string; password: string}) => {
     body: JSON.stringify(data)
   }).then(async res => {
     if (res.ok) {
-      console.log(res.json())
-      // 注册 设置token
+      // console.log('---注册成功json', await res.json())
       return setLocalStorageItem(await res.json())
     } else {
       return Promise.reject(await res.json());
@@ -35,7 +34,6 @@ export const register = (data: {username: string; password: string}) => {
 
 // 登录请求
 export const login = (data: {username: string; password: string}) => {
-
   return fetch(`${apiUrl}/login`, {
     method: 'POST',
     headers: {
@@ -44,10 +42,7 @@ export const login = (data: {username: string; password: string}) => {
     body: JSON.stringify(data)
   }).then(async (res) => { 
     if (res.ok) {
-      // 注册 设置token 返回一个user
-      const data1: User = setLocalStorageItem(await res.json());
-      console.log('data1', data1)
-      return data1;
+      return setLocalStorageItem(await res.json())
     } else {
       // 返回错误信息
       return Promise.reject(await res.json())
