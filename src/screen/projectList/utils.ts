@@ -11,3 +11,17 @@ export const useProjectsSearchParams = () => {
     setParams
   ] as const;
 };
+
+/** 弹窗显示的状态 */
+export const useProjectModal = () => {
+  const [{projectModalCreate}, setProjectModalCreate] = useUrlQueryParams(['projectModalCreate']);
+
+  const open = () => setProjectModalCreate({projectModalCreate: true});
+  const close = () => setProjectModalCreate({projectModalCreate: false});
+
+  return {
+    projectModalOpen: projectModalCreate === 'true',
+    open,
+    close
+  }
+};
