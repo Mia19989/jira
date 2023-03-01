@@ -1,4 +1,4 @@
-import { Dropdown, Menu, MenuProps, Table, TableProps } from "antd";
+import { Dropdown, MenuProps, Table, TableProps } from "antd";
 import React from "react";
 import { User } from './SearchBar'
 import dayjs from "dayjs";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Pin from "../../components/pin";
 import { useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
+import { useProjectModal } from "./utils";
 // 项目表格 项目 - 负责人
 
 export interface Project {
@@ -20,7 +21,6 @@ export interface Project {
 interface ProjectTableProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element;
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
@@ -30,9 +30,11 @@ const ProjectTable = ({users, ...props}: ProjectTableProps) => {
     mutate({id, pin}).then(props.refresh);
   }
 
+  const {open} = useProjectModal();
+
   const items: MenuProps['items'] = [
     {
-      label: props.projectButton,
+      label: <ButtonNoPadding type="link" onClick={open}>编辑</ButtonNoPadding>,
       key: 'edit',
     }
   ];

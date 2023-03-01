@@ -1,13 +1,17 @@
 import { List, Popover, Typography } from "antd";
 import React from "react";
+import { useProjectModal } from "../screen/projectList/utils";
 import { useProject } from "../utils/project";
+import { ButtonNoPadding } from "./lib";
 
 /** 气泡卡片 */
-const ProjectPopover = (props: {projectButton: JSX.Element}) => {
+const ProjectPopover = () => {
   // 项目列表数据
   const { data: projects, isLoading } = useProject();
   /** 收藏的项目 */
   const pinProjects = projects?.filter(item => item?.pin);
+  const {open} = useProjectModal();
+
   /** 气泡卡片内容 */
   const content = <div>
     <Typography.Text type="secondary">收藏项目</Typography.Text>
@@ -17,7 +21,7 @@ const ProjectPopover = (props: {projectButton: JSX.Element}) => {
       <List.Item>{item?.name}</List.Item>
       )}
     />
-    {props?.projectButton}
+    <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
   </div>
 
   return <Popover placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >

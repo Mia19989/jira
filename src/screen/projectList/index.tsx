@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import ProjectTable from "./ProjectTable";
 import SearchBar from "./SearchBar";
 import styled from "@emotion/styled";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { useProject } from "../../utils/project";
 import { useUser } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
-import { useProjectsSearchParams } from "./utils";
-import { Row } from "../../components/lib";
+import { useProjectModal, useProjectsSearchParams } from "./utils";
+import { ButtonNoPadding, Row } from "../../components/lib";
 
-const ProjectSys = (props: {projectButton: JSX.Element}) => {
+const ProjectSys = () => {
   // const [, setParams] = useState({
   //   name: '', // 项目名称
   //   personId: '' // 对应的负责人
@@ -24,7 +24,8 @@ const ProjectSys = (props: {projectButton: JSX.Element}) => {
   const [params, setParams] = useProjectsSearchParams();
   const debouncedVal = useDebounce(params, 200);
   const {isLoading, data: list, error, retry} = useProject(debouncedVal);
-  const { data: users } = useUser()
+  const { data: users } = useUser();
+  const {open} = useProjectModal();
 
   // 使用hook封装请求 自动添加上登录信息token
   // const client = useHttp()
@@ -64,11 +65,11 @@ const ProjectSys = (props: {projectButton: JSX.Element}) => {
     <Container>
       <Row spaceBetween>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
       </Row>
       <SearchBar params={params} setParams={setParams} users={users || []} />
       {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
-      <ProjectTable projectButton={props.projectButton} refresh={retry} dataSource={list || []} loading={isLoading} users={users || []} />
+      <ProjectTable refresh={retry} dataSource={list || []} loading={isLoading} users={users || []} />
     </Container>
   )
 };
