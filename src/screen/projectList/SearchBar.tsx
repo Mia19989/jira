@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { Project } from "./ProjectTable";
-import { UserSelect } from "../../components/user-select";
+import { UserSelect } from "../../components/UserSelect";
 
 // 搜索框
 export interface User {

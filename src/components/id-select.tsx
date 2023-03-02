@@ -5,8 +5,8 @@ import { Raw } from "../types";
 type SelectProprs = React.ComponentProps<typeof Select>;
  
 export interface IdSelectProps extends Omit<SelectProprs, 'value' | 'onChange' | 'defaultOptionName' | 'options'> {
-  value: Raw | null | undefined; // select组件上的value
-  onChange: (value?: number) => void; // onChange事件 只会回调number和undefined类型
+  value?: Raw | null | undefined; // select组件上的value
+  onChange?: (value?: number) => void; // onChange事件 只会回调number和undefined类型
   defaultOptionName?: string; // 默认的选项 
   options?: {name: string; id: number}[]; // 选项 
 };
@@ -24,7 +24,7 @@ export const IdSelect = (props: IdSelectProps) => {
     <Select
     {...restProps}
     value={options?.length ? toNumber(value) : 0} 
-    onChange={value => onChange(toNumber(value) || undefined)}>
+    onChange={value => onChange?.(toNumber(value) || undefined)}>
       {
         defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
       }

@@ -55,5 +55,6 @@ export const useHttp = () => {
   // Parameters是ts中utility type的一种; utility type在泛型中传入类型 对类型做一定的操作
   // Partial Omit等是常用的utility type; Omit对类型中的某些删除掉; Partial把类型中的某些变可选类型
   // 此处typeof 是ts中静态的typeof 提取typeof后面变量的类型
-  return useCallback((...[endpoint, config]: Parameters<typeof http>) => http(endpoint, {...config, token: user?.token}), [user?.token]);
+  return useCallback((...[endpoint, config]: 
+    Parameters<typeof http>) => http(endpoint, {...config, token: user?.token}), [user?.token]);
 }

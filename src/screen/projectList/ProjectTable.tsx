@@ -1,8 +1,8 @@
-import { Dropdown, MenuProps, Table, TableProps } from "antd";
 import React from "react";
-import { User } from './SearchBar'
+import { Dropdown, MenuProps, Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { User } from './SearchBar'
 import Pin from "../../components/pin";
 import { useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
@@ -20,22 +20,25 @@ export interface Project {
 
 interface ProjectTableProps extends TableProps<Project> {
   users: User[];
-  refresh?: () => void;
 }
 
 const ProjectTable = ({users, ...props}: ProjectTableProps) => {
   const { mutate } = useEditProject();
   // 柯里化
   const pinProject = (id: number) => (pin: boolean) => {
-    mutate({id, pin}).then(props.refresh);
+    mutate({id, pin});
   }
 
-  const {open} = useProjectModal();
+  const {open, startEdit} = useProjectModal();
 
   const items: MenuProps['items'] = [
     {
-      label: <ButtonNoPadding type="link" onClick={open}>编辑</ButtonNoPadding>,
+      label: <ButtonNoPadding type="link">编辑</ButtonNoPadding>,
       key: 'edit',
+    },
+    {
+      label: <ButtonNoPadding type="link">删除</ButtonNoPadding>,
+      key: 'delete',
     }
   ];
 
@@ -91,7 +94,13 @@ const ProjectTable = ({users, ...props}: ProjectTableProps) => {
           title: "操作",
           render(val, project) {
             return (
-              <Dropdown menu={{items}} trigger={['click']}>
+              <Dropdown menu={{items, 
+              onClick: (key) => {
+                if (key.key === 'edit') {
+                  startEdit(project.id);
+                }
+              }}} 
+              trigger={['click']}>
                 <ButtonNoPadding type="link">...</ButtonNoPadding>
               </Dropdown>
             )

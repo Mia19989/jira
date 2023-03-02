@@ -1,11 +1,12 @@
-import { Button, Card, Divider, Typography } from "antd";
+import { Button, Card, Divider } from "antd";
 import React, { useState } from "react";
+import styled from "@emotion/styled";
 import Login from "./Login";
 import Register from "./Register";
-import styled from "@emotion/styled";
 import logo from "../assets/logo.svg";
 import left from "../assets/left.svg";
 import right from "../assets/right.svg";
+import { ErrorBox } from "../components/lib";
 
 const UnAuthLogging = () => {
   // 是否注册 默认不注册
@@ -18,7 +19,7 @@ const UnAuthLogging = () => {
       <ShadowCard>
         {/* 根据是否注册 显示注册或者登录 */}
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
-        {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
+        <ErrorBox error={error} />
         {
           isRegister ? <Register onError={setError} /> : <Login onError={setError} />
         }

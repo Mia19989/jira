@@ -3,11 +3,11 @@ import ProjectTable from "./ProjectTable";
 import SearchBar from "./SearchBar";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
-import { useProject } from "../../utils/project";
+import { useProjects } from "../../utils/project";
 import { useUser } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjectModal, useProjectsSearchParams } from "./utils";
-import { ButtonNoPadding, Row } from "../../components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib";
 
 const ProjectSys = () => {
   // const [, setParams] = useState({
@@ -23,7 +23,7 @@ const ProjectSys = () => {
   useDocumentTitle('项目列表', false);
   const [params, setParams] = useProjectsSearchParams();
   const debouncedVal = useDebounce(params, 200);
-  const {isLoading, data: list, error, retry} = useProject(debouncedVal);
+  const {isLoading, data: list, error} = useProjects(debouncedVal);
   const { data: users } = useUser();
   const {open} = useProjectModal();
 
@@ -68,8 +68,8 @@ const ProjectSys = () => {
         <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
       </Row>
       <SearchBar params={params} setParams={setParams} users={users || []} />
-      {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
-      <ProjectTable refresh={retry} dataSource={list || []} loading={isLoading} users={users || []} />
+      <ErrorBox error={error} />
+      <ProjectTable dataSource={list || []} loading={isLoading} users={users || []} />
     </Container>
   )
 };

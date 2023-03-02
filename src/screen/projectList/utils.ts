@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useProject } from "../../utils/project";
 import { useUrlQueryParams } from "../../utils/url";
 
 // 项目列表搜索参数
@@ -12,16 +13,29 @@ export const useProjectsSearchParams = () => {
   ] as const;
 };
 
-/** 弹窗显示的状态 */
+/** 弹窗相关状态 */
 export const useProjectModal = () => {
+  // 弹窗是否显示
   const [{projectModalCreate}, setProjectModalCreate] = useUrlQueryParams(['projectModalCreate']);
 
+  // 代表编辑项目modal
+  const [{editingProjectId}, setEditingProjectId] = useUrlQueryParams(['editingProjectId']);
+
+  // 获取对应id的项目信息
+  const { data: editingProject, isLoading } = useProject(Number(editingProjectId));
+
   const open = () => setProjectModalCreate({projectModalCreate: true});
-  const close = () => setProjectModalCreate({projectModalCreate: undefined});
+  const closeCreate = () => setProjectModalCreate({projectModalCreate: undefined});
+  const closeEdit = () => setEditingProjectId({editingProjectId: undefined});
+  const startEdit = (id: number) => setEditingProjectId({editingProjectId: id});
 
   return {
-    projectModalOpen: projectModalCreate === 'true',
+    projectModalOpen: projectModalCreate === 'true' || Boolean(editingProjectId),
+    editingProject,
+    isLoading,
     open,
-    close
+    closeCreate,
+    closeEdit,
+    startEdit
   }
 };
