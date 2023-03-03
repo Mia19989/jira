@@ -45,13 +45,10 @@ import { cleanObject, subset } from ".";
 export const useSetUrlSearchParam = () => {
   const [searchParams, setSearchParam] = useSearchParams();
   return (params: { [key in string]: unknown }) => {
-    console.log('---测试params', params);
     const o = cleanObject({
       ...Object.fromEntries(searchParams),
       ...params,
     }) as URLSearchParamsInit;
-
-    console.log('---测试处理之后params', o);
     return setSearchParam(o);
   };
 };

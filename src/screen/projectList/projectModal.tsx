@@ -5,6 +5,7 @@ import { useProjectModal } from "./utils";
 import { UserSelect } from "../../components/UserSelect";
 import { useAddProject, useEditProject } from "../../utils/project";
 import { ErrorBox } from "../../components/lib";
+import styled from "@emotion/styled";
 
 /** 创建/编辑项目的弹窗 */
 const ProjectModal = () => {
@@ -31,6 +32,7 @@ const ProjectModal = () => {
   }, [editingProject, form])
 
   return <Drawer forceRender open={projectModalOpen} onClose={close} width='100%'>
+    <Container>
     {
       isLoading ? <Spin size="large" /> : <>
         <h1>{title}</h1>
@@ -48,13 +50,22 @@ const ProjectModal = () => {
             <UserSelect defaultOptionName={'负责人'} />
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item style={{textAlign: 'right'}}>
             <Button loading={mutateLoading} type="primary" htmlType="submit">提交</Button>
           </Form.Item>
         </Form>
       </>
     }
+    </Container>
   </Drawer>
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`
 
 export default ProjectModal;
