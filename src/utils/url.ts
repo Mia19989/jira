@@ -24,7 +24,7 @@ import { cleanObject, subset } from ".";
 /**
  * 返回页面url中，指定键的参数值
  */
- export const useUrlQueryParams = <K extends string>(keys: K[]) => {
+export const useUrlQueryParams = <K extends string>(keys: K[]) => {
   const [searchParams] = useSearchParams();
   const setSearchParams = useSetUrlSearchParam();
   const [stateKeys] = useState(keys);
@@ -49,6 +49,7 @@ export const useSetUrlSearchParam = () => {
       ...Object.fromEntries(searchParams),
       ...params,
     }) as URLSearchParamsInit;
+    console.log('---测试params', o);
     return setSearchParam(o);
   };
 };

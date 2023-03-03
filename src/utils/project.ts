@@ -1,8 +1,9 @@
 import React from "react";
-import { useQuery, useQueryClient, useMutation } from "react-query";
+import { useQuery, useQueryClient, useMutation, QueryKey } from "react-query";
 import { cleanObject } from ".";
 import { Project } from "../screen/projectList/ProjectTable";
 import { useHttp } from "./http";
+import { useAddConfig, useDeleteConfig, useEditConfig } from "./useOptimisticOptions";
 
 export const useProjects = (params?: Partial<Project>) => {
   const client = useHttp();
@@ -25,8 +26,8 @@ export const useProjects = (params?: Partial<Project>) => {
   );
 };
 
-// 编辑projects中的项目
-export const useEditProject = () => {
+/** 编辑projects中的项目 */
+export const useEditProject = (queryKey: QueryKey) => {
   // 发送请求 修改project数据
   const client = useHttp();
   // const { run, ...restResult } = useAsync();
@@ -44,18 +45,20 @@ export const useEditProject = () => {
   //   ...restResult
   // }
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation((params: Partial<Project>) => client(`projects/${params.id}`, {
     data: params,
     method: 'PATCH'
-    }), {
-      onSuccess: () => queryClient.invalidateQueries('projects')
-    }
+    }),
+    // {
+    //   onSuccess: () => queryClient.invalidateQueries('projects')
+    // }
+    useEditConfig(queryKey)
   )
 };
 
-// 增加projects中的项目
-export const useAddProject = () => {
+/** 增加projects中的项目 */
+export const useAddProject = (queryKey: QueryKey) => {
   // 发送请求 修改project数据
   const client = useHttp();
   // const { run, ...restResult } = useAsync();
@@ -73,13 +76,22 @@ export const useAddProject = () => {
   //   ...restResult
   // };
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation((params: Partial<Project>) => client(`projects`, {
     data: params,
     method: 'POST'
-    }), {
-      onSuccess: () => queryClient.invalidateQueries('projects')
-    }
+    }),
+    useAddConfig(queryKey)
+  )
+};
+
+/** 删除项目 */
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(({id}: {id: number}) => client(`projects/${id}`, {
+    method: 'DELETE'
+    }),
+    useDeleteConfig(queryKey)
   )
 };
 

@@ -1,12 +1,12 @@
 import React from "react";
-import { Dropdown, MenuProps, Table, TableProps } from "antd";
+import { Dropdown, MenuProps, Modal, Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { User } from './SearchBar'
 import Pin from "../../components/pin";
-import { useEditProject } from "../../utils/project";
+import { useDeleteProject, useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
-import { useProjectModal } from "./utils";
+import { useProjectModal, useProjectsQueryKey } from "./utils";
 // 项目表格 项目 - 负责人
 
 export interface Project {
@@ -22,25 +22,42 @@ interface ProjectTableProps extends TableProps<Project> {
   users: User[];
 }
 
-const ProjectTable = ({users, ...props}: ProjectTableProps) => {
-  const { mutate } = useEditProject();
+const ProjectTable = ({users, ...props}: ProjectTableProps) => {  
   // 柯里化
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({id, pin});
   }
 
-  const {open, startEdit} = useProjectModal();
+  const {startEdit} = useProjectModal();
+  const { mutate } = useEditProject(useProjectsQueryKey());
+  const { mutate: handleDelete } = useDeleteProject(useProjectsQueryKey());
 
   const items: MenuProps['items'] = [
     {
-      label: <ButtonNoPadding type="link">编辑</ButtonNoPadding>,
+      label: '编辑',
       key: 'edit',
     },
     {
-      label: <ButtonNoPadding type="link">删除</ButtonNoPadding>,
+      label: '删除',
       key: 'delete',
     }
   ];
+
+  const confirmDeleteModal = (id: number) => {
+    Modal.confirm({
+      title: '确定删除该项目吗?',
+      content: '点击确定删除',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        console.log('点击确定删除');
+        handleDelete({id});
+      },
+      onCancel() {
+        console.log('点击取消');
+      },
+    });
+  }
 
   return (
     <>
@@ -98,6 +115,9 @@ const ProjectTable = ({users, ...props}: ProjectTableProps) => {
               onClick: (key) => {
                 if (key.key === 'edit') {
                   startEdit(project.id);
+                }
+                if (key.key === 'delete') {
+                  confirmDeleteModal(project.id);
                 }
               }}} 
               trigger={['click']}>

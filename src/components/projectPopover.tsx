@@ -1,5 +1,5 @@
-import { List, Popover, Typography } from "antd";
 import React from "react";
+import { List, Popover, Typography } from "antd";
 import { useProjectModal } from "../screen/projectList/utils";
 import { useProjects } from "../utils/project";
 import { ButtonNoPadding } from "./lib";
@@ -7,7 +7,7 @@ import { ButtonNoPadding } from "./lib";
 /** 气泡卡片 */
 const ProjectPopover = () => {
   // 项目列表数据
-  const { data: projects, isLoading } = useProjects();
+  const { data: projects } = useProjects();
   /** 收藏的项目 */
   const pinProjects = projects?.filter(item => item?.pin);
   const {open} = useProjectModal();

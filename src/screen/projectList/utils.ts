@@ -1,8 +1,8 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useProject } from "../../utils/project";
 import { useUrlQueryParams } from "../../utils/url";
 
-// 项目列表搜索参数
+/** 项目列表搜索参数 */
 export const useProjectsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams(['name', 'personId']);
   // params类型转化成number
@@ -38,4 +38,9 @@ export const useProjectModal = () => {
     closeEdit,
     startEdit
   }
+};
+
+export const useProjectsQueryKey = () => {
+  const [params] = useProjectsSearchParams();
+  return ['projects', params];
 };

@@ -1,7 +1,7 @@
 
 import React, { useEffect } from "react";
 import { Button, Drawer, Form, Input, Spin } from "antd";
-import { useProjectModal } from "./utils";
+import { useProjectModal, useProjectsQueryKey } from "./utils";
 import { UserSelect } from "../../components/UserSelect";
 import { useAddProject, useEditProject } from "../../utils/project";
 import { ErrorBox } from "../../components/lib";
@@ -15,23 +15,28 @@ const ProjectModal = () => {
   // 判断是编辑/创建
   const useMutateProject = editingProject ? useEditProject : useAddProject;
   // 使用mutateAsync异步
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject(useProjectsQueryKey());
   const [ form ] = Form.useForm();
   const close = editingProject ? closeEdit : closeCreate;
 
+  const handleClose = () => {
+    // 重新mount组件
+    form.resetFields();
+    close();
+  };
+
   const onFinish = (value: any) => {
-    mutateAsync({...value, ...editingProject}).then(() => {
-      // 重新mount组件
-      form.resetFields();
-      close();
+    mutateAsync({...editingProject, ...value}).then(() => {
+      handleClose();
     })
   };
 
   useEffect(() => {
     form.setFieldsValue(editingProject);
+    console.log('---获取到的信息', editingProject);
   }, [editingProject, form])
 
-  return <Drawer forceRender open={projectModalOpen} onClose={close} width='100%'>
+  return <Drawer forceRender open={projectModalOpen} onClose={handleClose} width='100%'>
     <Container>
     {
       isLoading ? <Spin size="large" /> : <>
