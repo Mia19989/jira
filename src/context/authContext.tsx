@@ -1,4 +1,5 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
+import { useQueryClient } from "react-query";
 import * as auth from '../auth-provider';
 import { FullPageError, FullPageLoading } from "../components/lib";
 import { User } from "../screen/projectList/SearchBar";
@@ -40,13 +41,17 @@ interface UserParams {
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
   // const [user, setUser] = useState<User | null>(null);
-  const {isLoading, isIdle, isError, error, run, data: user, setData: setUser} = useAsync<User | null>()
+  const {isLoading, isIdle, isError, error, run, data: user, setData: setUser} = useAsync<User | null>();
+  const queryClient = useQueryClient();
 
   const login = (params: UserParams) => auth.login(params).then((user) => {setUser(user);});
 
   const register = (params: UserParams) => auth.register(params).then(user => {setUser(user)});
 
-  const logout = () => auth.logout().then(() => {setUser(null)});
+  const logout = () => auth.logout().then(() => {
+    setUser(null);
+    queryClient.clear();
+  });
 
   useMount(() => {
     run(bootstrapUser())
