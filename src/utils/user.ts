@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { cleanObject } from ".";
-import { User } from "../screen/projectList/SearchBar";
+import { User } from "../types/user";
 import { useHttp } from "./http";
 import { useAsync } from "./useAsync";
 

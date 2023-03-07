@@ -1,5 +1,5 @@
 // 操控jwt token
-import { User } from "./screen/projectList/SearchBar";
+import { User } from "./types/user";
 const key = '__auth_token__'
 
 const apiUrl = process.env.REACT_APP_API_URL;

@@ -1,14 +1,8 @@
 import React from "react";
 import { Form, Input } from "antd";
-import { Project } from "./ProjectTable";
+import { Project } from "../../types/project";
 import { UserSelect } from "../../components/UserSelect";
-
-// 搜索框
-export interface User {
-  id: number;
-  name: string;
-  token: string;
-}
+import { User } from "../../types/user";
 
 interface SearchBarProps {
   params: Partial<Pick<Project, 'name' | 'personId'>>;

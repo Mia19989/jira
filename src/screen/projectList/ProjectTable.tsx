@@ -2,22 +2,12 @@ import React from "react";
 import { Dropdown, MenuProps, Modal, Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { User } from './SearchBar'
+import { User } from "../../types/user";
 import Pin from "../../components/pin";
 import { useDeleteProject, useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
 import { useProjectModal, useProjectsQueryKey } from "./utils";
-// 项目表格 项目 - 负责人
-
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  organization: string;
-  created: number;
-  pin: boolean;
-}
-
+import { Project } from "../../types/project";
 interface ProjectTableProps extends TableProps<Project> {
   users: User[];
 }

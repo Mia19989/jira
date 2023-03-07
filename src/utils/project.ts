@@ -1,7 +1,6 @@
-import React from "react";
-import { useQuery, useQueryClient, useMutation, QueryKey } from "react-query";
+import { useQuery, useMutation, QueryKey } from "react-query";
 import { cleanObject } from ".";
-import { Project } from "../screen/projectList/ProjectTable";
+import { Project } from "../types/project";
 import { useHttp } from "./http";
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./useOptimisticOptions";
 
@@ -98,7 +97,7 @@ export const useDeleteProject = (queryKey: QueryKey) => {
 /** 获取对应id的project信息 */
 export const useProject = (id?: number) => {
   const client = useHttp();
-  return useQuery(
+  return useQuery<Project>(
     ['project', {id}], 
     () => client(`projects/${id}`),
     {
