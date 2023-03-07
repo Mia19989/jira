@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, Input } from "antd";
-import { useAddTask } from "../../utils/kanban";
+import { useAddTask } from "../../utils/task";
 import { useProjectIdInUrl, useTaskQueryKey } from "./utils";
 
 export const CreateTask = ({kanbanId}: {kanbanId: number}) => {

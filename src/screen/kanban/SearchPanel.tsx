@@ -15,12 +15,12 @@ export const SearchPanel = () => {
       name: undefined,
       typeId: undefined,
       processorId: undefined,
-      // tagId: undefined
+      tagId: undefined
     })
   }
 
   return <Row marginBottom={4} marginRight={true}>
-    <Input style={{width: '20rem'}} placeholder="任务名" value={searchParams.name} 
+    <Input style={{width: '20rem'}} placeholder="任务名" value={searchParams.name}
       onChange={evt => setSearchParams({name: evt.target.value})} />
     <UserSelect value={searchParams.processorId} defaultOptionName="经办人" 
       onChange={(value: any) => setSearchParams({processorId: value})} />

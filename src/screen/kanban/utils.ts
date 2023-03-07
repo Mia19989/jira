@@ -32,7 +32,7 @@ export const useTaskSearchParams = () => {
   const debouncedName = useDebounce(params.name, 200);
   return useMemo(() =>({
     projectId,
-    name: debouncedName,
+    name: debouncedName || undefined,
     typeId: Number(params.typeId) || undefined,
     processorId: Number(params.processorId) || undefined,
     tagId: Number(params.tagId) || undefined

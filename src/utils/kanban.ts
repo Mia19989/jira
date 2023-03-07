@@ -1,9 +1,8 @@
 import { useQuery, useMutation, QueryKey } from "react-query";
 import { cleanObject } from ".";
 import { Kanban } from "../types/kanban";
-import { Task } from "../types/task";
 import { useHttp } from "./http";
-import { useAddConfig } from "./useOptimisticOptions";
+import { useAddConfig, useDeleteConfig } from "./useOptimisticOptions";
 
 export const useKanbans = (params?: Partial<Kanban>) => {
   const client = useHttp();
@@ -26,14 +25,12 @@ export const useAddKanban = (queryKey: QueryKey) => {
   )
 };
 
-/** 创建任务 */
-export const useAddTask = (queryKey: QueryKey) => {
+/** 删除看板 */
+export const useDeleteKanban = (queryKey: QueryKey) => {
   const client = useHttp();
-
-  return useMutation((params: Partial<Task>) => client(`tasks`, {
-    data: params,
-    method: 'POST'
+  return useMutation(({id}: {id: number}) => client(`kanbans/${id}`, {
+    method: 'DELETE'
     }),
-    useAddConfig(queryKey)
+    useDeleteConfig(queryKey)
   )
 };

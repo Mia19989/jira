@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Form, Input, Modal } from "antd";
+import { Form, Input, Modal, Button } from "antd";
 import { useTaskModal, useTaskQueryKey } from "./utils";
-import { useEditTask } from "../../utils/task";
+import { useDeleteTask, useEditTask } from "../../utils/task";
 import { UserSelect } from "../../components/UserSelect";
 import { TaskTypeSelect } from "../../components/TaskTypeSelect";
 
@@ -13,6 +13,7 @@ const layout = {
 export const TaskModal = () => {
   const {editingTaskId, editingTask, close} = useTaskModal();
   const {mutateAsync: editTask, isLoading: editLoading} = useEditTask(useTaskQueryKey());
+  const {mutate: deleteTask} = useDeleteTask(useTaskQueryKey());
   const [form] = Form.useForm();
 
   const onCancel = () => {
@@ -28,7 +29,23 @@ export const TaskModal = () => {
 
   useEffect(() => {
     form.setFieldsValue(editingTask);
-  }, [editingTask, form])
+  }, [editingTask, form]);
+
+  const confirmDeleteTask = (id: number) => {
+    close();
+    Modal.confirm({
+      title: '确定删除任务吗?',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        console.log('点击确定删除');
+        deleteTask({id});
+      },
+      onCancel() {
+        console.log('点击取消');
+      },
+    });
+  }
 
   return <Modal forceRender={true} open={!!editingTaskId} title="编辑任务" cancelText="取消" okText="确定"
     confirmLoading={editLoading}
@@ -55,5 +72,8 @@ export const TaskModal = () => {
         <TaskTypeSelect />
       </Form.Item>
     </Form>
+    <div style={{textAlign: 'right'}}>
+      <Button size="small" onClick={() => confirmDeleteTask(Number(editingTaskId))}>删除</Button>
+    </div>
   </Modal>
 }
