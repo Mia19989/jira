@@ -92,6 +92,10 @@ const Header = styled(Row)`
 `
 const HeaderLeft = styled(Row)``
 const HeaderRight = styled.div``
-const Main = styled.main`grid-area: main;`
+const Main = styled.main`
+  display: flex;
+  overflow: hidden;
+  grid-area: main;
+`
 
 export default AuthLogging;

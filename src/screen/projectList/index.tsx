@@ -7,7 +7,7 @@ import { useProjects } from "../../utils/project";
 import { useUser } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjectModal, useProjectsSearchParams } from "./utils";
-import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib";
+import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from "../../components/lib";
 
 const ProjectSys = () => {
   // const [, setParams] = useState({
@@ -62,7 +62,7 @@ const ProjectSys = () => {
   // }, [debouncedParams]) // params发生变化 list更新数据
 
   return (
-    <Container>
+    <ScreenContainer>
       <Row spaceBetween>
         <h1>项目列表</h1>
         <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
@@ -70,12 +70,8 @@ const ProjectSys = () => {
       <SearchBar params={params} setParams={setParams} users={users || []} />
       <ErrorBox error={error} />
       <ProjectTable dataSource={list || []} loading={isLoading} users={users || []} />
-    </Container>
+    </ScreenContainer>
   )
 };
-
-const Container = styled.div`
-  padding: 3.2rem;
-`
 
 export default ProjectSys;
