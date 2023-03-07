@@ -7,6 +7,7 @@ import taskIcon from "../../assets/task.svg";
 import bugIcon from "../../assets/bug.svg";
 import styled from "@emotion/styled";
 import { Card } from "antd";
+import { CreateTask } from "./CreateTask";
 
 const TaskTypeIcon = ({id}: {id: number}) => {
   const {data: taskTypes} = useTaskTypes();
@@ -18,8 +19,7 @@ const TaskTypeIcon = ({id}: {id: number}) => {
 }
 
 export const KanbanColumn = ({kanban}: {kanban: Kanban}) => {
-  // useTaskSearchParams()
-  const { data: allTasks } = useTasks();
+  const { data: allTasks } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter(task => task.kanbanId === kanban.id);
 
   return <Container>
@@ -31,11 +31,12 @@ export const KanbanColumn = ({kanban}: {kanban: Kanban}) => {
         <TaskTypeIcon id={task.typeId} />
       </Card>)
     }
+    <CreateTask kanbanId={kanban.id} />
     </TasksContainer>
   </Container>
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 27rem;
