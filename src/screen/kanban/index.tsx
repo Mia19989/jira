@@ -9,6 +9,7 @@ import { CreateKanban } from "./CreateKanban";
 import { KanbanColumn } from "./KanbanColumn";
 import { SearchPanel } from "./SearchPanel";
 import { useKanbanSearchParams, useProjectInUrl, useTaskSearchParams } from "./utils";
+import { TaskModal } from "./TaskModal";
 
 const KanBan = () => {
   useDocumentTitle('看板列表');
@@ -29,6 +30,7 @@ const KanBan = () => {
       <CreateKanban />
     </ColumnContainer>
     }
+    <TaskModal />
   </ScreenContainer>
 }
 

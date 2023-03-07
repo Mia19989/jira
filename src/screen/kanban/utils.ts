@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom"
+import { useDebounce } from "../../utils";
 import { useProject } from "../../utils/project";
+import { useTask } from "../../utils/task";
 import { useUrlQueryParams } from "../../utils/url";
 
 /** 获取url上project的id */
@@ -27,13 +29,34 @@ export const useTaskSearchParams = () => {
     'tagId'
   ]);
   const projectId = useProjectIdInUrl();
+  const debouncedName = useDebounce(params.name, 200);
   return useMemo(() =>({
     projectId,
-    name: params.name || undefined,
+    name: debouncedName,
     typeId: Number(params.typeId) || undefined,
     processorId: Number(params.processorId) || undefined,
     tagId: Number(params.tagId) || undefined
-  }), [projectId, params]);
+  }), [projectId, params, debouncedName]);
 };
 /** 获取对应task的请求参数 */
 export const useTaskQueryKey = () => ['tasks', useTaskSearchParams()];
+
+/** task弹窗相关状态 */
+export const useTaskModal = () => {
+  // 编辑task弹窗是否显示
+  const [{editingTaskId}, setEditingTaskId] = useUrlQueryParams(['editingTaskId']);
+
+  // 获取对应id的项目信息
+  const { data: editingTask, isLoading } = useTask(Number(editingTaskId));
+
+  const close = useCallback(() => setEditingTaskId({editingTaskId: undefined}), [setEditingTaskId]);
+  const startEdit = useCallback((id: number) => setEditingTaskId({editingTaskId: id}), [setEditingTaskId]);
+
+  return {
+    editingTaskId,
+    editingTask,
+    isLoading,
+    close,
+    startEdit
+  }
+};
