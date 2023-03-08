@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Routes, Route, Navigate, useLocation } from "react-router";
-import KanBan from "../kanban";
-import Epic from "../epic";
+import KanbanScreen from "../kanban";
+import EpicScreen from "../epic";
 import styled from "@emotion/styled";
 import { Menu } from "antd";
 
@@ -28,8 +28,8 @@ export const ProjectScreen = () => {
       </Aside>
       <Main>
         <Routes>
-          <Route path="kanban" element={<KanBan/>}></Route>
-          <Route path="epic" element={<Epic/>}></Route>
+          <Route path="kanban" element={<KanbanScreen/>}></Route>
+          <Route path="epic" element={<EpicScreen/>}></Route>
           <Route path="*" element={<Navigate to="kanban" replace={true} />}></Route>
         </Routes>
       </Main>
@@ -51,4 +51,5 @@ const Main = styled.div`
 const Container = styled.div`
   display: grid;
   grid-template-columns: 16rem 1fr;
+  width: 100%;
 `

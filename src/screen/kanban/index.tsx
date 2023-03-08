@@ -14,7 +14,7 @@ import { TaskModal } from "./TaskModal";
 import { Drag, Drop, DropChild } from "../../components/DragAndDrop";
 import { useCallback } from "react";
 
-const KanBan = () => {
+const KanbanScreen = () => {
   useDocumentTitle('看板列表');
 
   const {data: kanbans, isLoading: kanbanIsLoading} = useKanbans(useKanbanSearchParams());
@@ -47,7 +47,7 @@ const KanBan = () => {
   </DragDropContext>
 }
 
-export default KanBan;
+export default KanbanScreen;
 
 export const useDragEnd = () => {
   const {data: kanbans} = useKanbans(useKanbanSearchParams());
