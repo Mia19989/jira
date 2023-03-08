@@ -18,6 +18,7 @@
     "jira-dev-tool": "1.6.59",
     "qs": "^6.11.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
     "react-router-dom": "6",
@@ -51,5 +52,8 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.3"
   }
 }

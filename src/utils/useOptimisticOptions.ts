@@ -1,4 +1,6 @@
 import { QueryKey, useQueryClient } from "react-query";
+import { Task } from "../types/task";
+import { reorder } from "./reorder";
 
 /** 生成optimistic update 相关的配置 */
 export const useConfig = (queryKey: QueryKey , callback: (target: any, old?: any[]) => any[]) => {
@@ -29,3 +31,17 @@ export const useDeleteConfig = (queryKey: QueryKey) => useConfig(queryKey, (targ
 export const useEditConfig = (queryKey: QueryKey) => useConfig(queryKey, (target, old) => old?.map(item => item?.id === target.id ? {...item, ...target} : item) || []);
 /** optimistic update 新增 */
 export const useAddConfig = (queryKey: QueryKey) => useConfig(queryKey, (target, old) => old?.length ? [...old, target] : []);
+/** optimistic update kanban拖拽 */
+export const useReorderKanbanConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => reorder({ list: old, ...target }));
+/** optimistic update task拖拽 */
+export const useReorderTaskConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => {
+    const orderedList = reorder({ list: old, ...target }) as Task[];
+    return orderedList.map((item) =>
+      item.id === target.fromId
+        ? { ...item, kanbanId: target.toKanbanId }
+        : item
+    );
+  }
+);

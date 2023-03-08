@@ -2,7 +2,8 @@ import { useQuery, useMutation, QueryKey } from "react-query";
 import { cleanObject } from ".";
 import { Task } from "../types/task";
 import { useHttp } from "./http";
-import { useAddConfig, useDeleteConfig, useEditConfig } from "./useOptimisticOptions";
+import { SortProps } from "./kanban";
+import { useAddConfig, useDeleteConfig, useEditConfig, useReorderTaskConfig } from "./useOptimisticOptions";
 
 export const useTasks = (params?: Partial<Task>) => {
   const client = useHttp();
@@ -49,7 +50,6 @@ export const useEditTask = (queryKey: QueryKey) => {
   )
 };
 
-
 /** 删除task */
 export const useDeleteTask = (queryKey: QueryKey) => {
   const client = useHttp();
@@ -59,3 +59,14 @@ export const useDeleteTask = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   )
 };
+
+/** 拖拽task */
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+
+  return useMutation((params: SortProps) => client('tasks/reorder', {
+    data: params,
+    method: 'POST'
+  }),
+  useReorderTaskConfig(queryKey))
+}
