@@ -1,17 +1,12 @@
-import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { cleanObject } from ".";
 import { User } from "../types/user";
 import { useHttp } from "./http";
-import { useAsync } from "./useAsync";
 
-export const useUser = (params?: Partial<User>) => {
+export const useUsers = (params?: Partial<User>) => {
   const client = useHttp();
-  const {run, ...result} = useAsync<User[]>();
-
-  useEffect(() => {
-    run(client('users', {data: cleanObject(params || {})}))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params])
-
-  return result
-}
+  return useQuery<User[]>(
+    ['users', params], 
+    () => client('users', {data: cleanObject(params || {})})
+  );
+};

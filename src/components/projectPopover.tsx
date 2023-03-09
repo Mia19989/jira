@@ -4,10 +4,10 @@ import { useProjectModal } from "../screen/projectList/utils";
 import { useProjects } from "../utils/project";
 import { ButtonNoPadding } from "./lib";
 
-/** 气泡卡片 */
+/** 收藏的项目列表气泡卡片 */
 const ProjectPopover = () => {
-  // 项目列表数据
-  const { data: projects } = useProjects();
+  // 项目列表数据 refetch收藏的项目数据同步
+  const { data: projects, refetch } = useProjects();
   /** 收藏的项目 */
   const pinProjects = projects?.filter(item => item?.pin);
   const {open} = useProjectModal();
@@ -24,7 +24,7 @@ const ProjectPopover = () => {
     <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
   </div>
 
-  return <Popover placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >
+  return <Popover onOpenChange={() => refetch()} placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >
     <h3>项目</h3>
   </Popover>
 };

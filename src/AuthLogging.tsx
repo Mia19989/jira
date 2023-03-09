@@ -11,6 +11,7 @@ import { Routes, Route, Navigate } from "react-router";
 import { ProjectScreen } from "./screen/projectScreen";
 import ProjectModal from "./screen/projectList/projectModal";
 import ProjectPopover from "./components/projectPopover";
+import UserPopover from "./components/UserPopover";
 
 // 已经登录 显示登出 和列表信息
 const AuthLogging = () => {
@@ -59,7 +60,7 @@ const PageHeader = () => {
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
         </ButtonNoPadding>
         <ProjectPopover />
-        <h3>用户</h3>
+        <UserPopover />
       </HeaderLeft>
       <HeaderRight>
         <User />

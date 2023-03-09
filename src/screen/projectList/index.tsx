@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
-import { useUser } from "../../utils/user";
+import { useUsers } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjectModal, useProjectsSearchParams } from "./utils";
 import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from "../../components/lib";
@@ -24,7 +24,7 @@ const ProjectSys = () => {
   const [params, setParams] = useProjectsSearchParams();
   const debouncedVal = useDebounce(params, 200);
   const {isLoading, data: list, error} = useProjects(debouncedVal);
-  const { data: users } = useUser();
+  const { data: users } = useUsers();
   const {open} = useProjectModal();
 
   // 使用hook封装请求 自动添加上登录信息token
