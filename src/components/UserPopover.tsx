@@ -5,13 +5,12 @@ import { useUsers } from "../utils/user";
 /** 用户列表气泡卡片 */
 const UserPopover = () => {
   const { data: users, refetch } = useUsers();
-  const pinUsers = users?.filter(item => item?.name);
 
   /** 气泡卡片内容 */
-  const content = <div>
+  const content = <div style={{minWidth: "30rem"}}>
     <Typography.Text type="secondary">负责人列表</Typography.Text>
     <List 
-      dataSource={pinUsers} 
+      dataSource={users} 
       renderItem={(item) => (
       <List.Item>{item?.name}</List.Item>
       )}

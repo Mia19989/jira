@@ -13,7 +13,7 @@ const ProjectPopover = () => {
   const {open} = useProjectModal();
 
   /** 气泡卡片内容 */
-  const content = <div>
+  const content = <div style={{minWidth: "30rem"}}>
     <Typography.Text type="secondary">收藏项目</Typography.Text>
     <List 
       dataSource={pinProjects} 
