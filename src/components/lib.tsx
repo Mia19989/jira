@@ -49,9 +49,9 @@ export const ButtonNoPadding = styled(Button)`
 
 // 类型守卫 判断符合条件val.message -> 是Error类型
 /** 判断是不是Error类型 */
-const isError = (val: any): val is Error => val.message;
+const isError = (val: any): val is Error => val?.message;
 
-export const ErrorBox = (error: {error: unknown}) => {
+export const ErrorBox = ({error}: {error: unknown}) => {
   if (isError(error))
     return <Typography.Text type="danger">{error?.message}</Typography.Text>
   return null;
