@@ -4,8 +4,7 @@ import { Button, Drawer, Form, Input, Spin } from "antd";
 import { useProjectModal, useProjectsQueryKey } from "./utils";
 import { UserSelect } from "../../components/UserSelect";
 import { useAddProject, useEditProject } from "../../utils/project";
-import { ErrorBox } from "../../components/lib";
-import styled from "@emotion/styled";
+import { ErrorBox, ModalContainer } from "../../components/lib";
 
 /** 创建/编辑项目的弹窗 */
 const ProjectModal = () => {
@@ -26,9 +25,12 @@ const ProjectModal = () => {
   };
 
   const onFinish = (value: any) => {
-    mutateAsync({...editingProject, ...value}).then(() => {
+    console.log('----创建 编辑项目数据', value, editingProject);
+
+    mutateAsync({...editingProject, ...value })
+      .then(() => {
       handleClose();
-    })
+    });
   };
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const ProjectModal = () => {
   }, [editingProject, form])
 
   return <Drawer forceRender open={projectModalOpen} onClose={handleClose} width='100%'>
-    <Container>
+    <ModalContainer>
     {
       isLoading ? <Spin size="large" /> : <>
         <h1>{title}</h1>
@@ -61,16 +63,8 @@ const ProjectModal = () => {
         </Form>
       </>
     }
-    </Container>
+    </ModalContainer>
   </Drawer>
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh;
-`
 
 export default ProjectModal;

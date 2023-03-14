@@ -31,19 +31,6 @@ const SearchBar = ({ params, setParams, users }: SearchBarProps) => {
           ...params,
           personId: value
         })}></UserSelect>
-        {/* <Select value={params.personId} onChange={value => setParams({
-          ...params,
-          personId: value
-        })}>
-          <Select.Option value="">负责人</Select.Option>
-          {
-            users.map((user: User) => {
-              return (
-                <Select.Option key={user.id} value={String(user.id)}>{user.name}</Select.Option>
-              )
-            }) 
-          }
-        </Select> */}
       </Form.Item>
     </Form>
   )

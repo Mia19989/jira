@@ -31,7 +31,9 @@
     "start": "set PORT=3003 && craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -r git@github.com:Mia19989/Mia19989.github.io.git -b main"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +57,7 @@
     "workerDirectory": "public"
   },
   "devDependencies": {
-    "@types/react-beautiful-dnd": "^13.1.3"
+    "@types/react-beautiful-dnd": "^13.1.3",
+    "gh-pages": "^5.0.0"
   }
 }

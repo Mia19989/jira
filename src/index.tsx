@@ -10,6 +10,7 @@ import "./App.css";
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 // loadDevTools(() => {
 //   root.render(
 //     <React.StrictMode>

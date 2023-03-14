@@ -1,5 +1,3 @@
-// 搜索框
-
 export interface User {
   id: number;
   name: string;

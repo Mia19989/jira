@@ -63,3 +63,11 @@ export const ScreenContainer = styled.div`
   width: 100%;
   padding: 3.2rem;
 `
+
+export const ModalContainer = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 80vh;
+`
