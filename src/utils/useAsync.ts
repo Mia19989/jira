@@ -98,7 +98,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     isLoading: state.stat === 'loading',
     isError: state.stat === 'error',
     isSuccess: state.stat === 'success',
-    dispatch,
+    // dispatch,
     setError,
     setData,
     run,

@@ -1,10 +1,10 @@
 import { setupServer } from "msw/node";
 import { rest } from "msw";
 import { http } from "../utils/http";
+
 // msw是用来mock服务器数据的 单元测试不应该真的请求服务器数据
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
 const server = setupServer();
 
 // 以下是jest(是对react最友好的一个测试库) 提供的一些工具函数
@@ -41,8 +41,8 @@ test('http请求时会在header里带上token', async () => {
   server.use(rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
     request = req;
     return res(ctx.json(mockResult));
-  }))
+  }));
 
   await http(endpoint, { token });
   expect(request.headers.get("Authorization")).toBe(`Bearer ${token}`);
-})
+});
