@@ -24,8 +24,9 @@ export const register = (data: {username: string; password: string}) => {
     body: JSON.stringify(data)
   }).then(async res => {
     if (res.ok) {
-      // console.log('---注册成功json', await res.json())
-      return setLocalStorageItem(await res.json())
+      const user = await res.json();
+      console.log('---注册成功json token', user);
+      return setLocalStorageItem(user);
     } else {
       return Promise.reject(await res.json());
     }
@@ -42,7 +43,9 @@ export const login = (data: {username: string; password: string}) => {
     body: JSON.stringify(data)
   }).then(async (res) => { 
     if (res.ok) {
-      return setLocalStorageItem(await res.json())
+      const user = await res.json();
+      console.log('---登录成功json token', user);
+      return setLocalStorageItem(user);
     } else {
       // 返回错误信息
       return Promise.reject(await res.json())

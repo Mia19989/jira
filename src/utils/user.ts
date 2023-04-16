@@ -11,10 +11,9 @@ export const useUsers = (params?: Partial<User>) => {
   );
 };
 
-/** 增加user */
+/** 增加负责人 */
 export const useAddUser = () => {
   const client = useHttp();
-
   return useMutation((params: Partial<User>) => client(`users`, {
     data: params,
     method: 'POST'
