@@ -3,6 +3,7 @@ import { List, Popover, Typography } from "antd";
 import { useProjectModal } from "../screen/projectList/utils";
 import { useProjects } from "../utils/project";
 import { ButtonNoPadding } from "./lib";
+import * as auth from '../auth-provider';
 
 /** 收藏的项目列表气泡卡片 */
 const ProjectPopover = () => {
@@ -11,6 +12,7 @@ const ProjectPopover = () => {
   /** 收藏的项目 */
   const pinProjects = projects?.filter(item => item?.pin);
   const {open} = useProjectModal();
+  const identity = auth.getAuthIdentity();
 
   /** 气泡卡片内容 */
   const content = <div style={{minWidth: "30rem"}}>
@@ -21,7 +23,7 @@ const ProjectPopover = () => {
       <List.Item>{item?.name}</List.Item>
       )}
     />
-    <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
+    { identity === "pm" && <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding> }
   </div>
 
   return <Popover onOpenChange={() => refetch()} placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >

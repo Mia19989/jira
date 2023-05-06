@@ -22,7 +22,7 @@ const EpicScreen = () => {
 
   const confirmDeleteModal = (id: number) => {
     Modal.confirm({
-      title: '确定删除该任务组吗?',
+      title: '确定删除该任务吗?',
       okText: '确定',
       cancelText: '取消',
       onOk() {
@@ -52,7 +52,7 @@ const EpicScreen = () => {
         />
         <div>
           {tasks?.filter(task => task.epicId === epic.id).map(task =>
-            <Link key={task.id} to={`/projects/${currentProjcet?.id}/kanban?editingTaskId=${task.id}`}>
+            <Link style={{margin: '0 10px 0 0'}} key={task.id} to={`/projects/${currentProjcet?.id}/kanban?editingTaskId=${task.id}`}>
               {task.name}
             </Link>
           )}

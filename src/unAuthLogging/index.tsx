@@ -14,7 +14,8 @@ const UnAuthLogging = () => {
   const [error, setError] = useState<Error | null>();
   return (
     <Container>
-      <Header />
+      {/* <Header /> */}
+      <h1>项目管理系统</h1>
       <Background />
       <ShadowCard>
         {/* 根据是否注册 显示注册或者登录 */}

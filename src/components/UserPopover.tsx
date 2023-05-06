@@ -3,11 +3,13 @@ import { List, Popover, Typography } from "antd";
 import { useUsers } from "../utils/user";
 import { ButtonNoPadding } from "./lib";
 import CreateUserModal from "./CreateUserModal";
+import * as auth from "../auth-provider";
 
 /** 用户列表气泡卡片 */
 const UserPopover = () => {
   const { data: users, refetch } = useUsers();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const identity = auth.getAuthIdentity();
 
   /** 气泡卡片内容 */
   const content = <div style={{minWidth: "30rem"}}>
@@ -18,7 +20,7 @@ const UserPopover = () => {
       <List.Item>{item?.name}</List.Item>
       )}
     />
-    <ButtonNoPadding type="link" onClick={() => setIsModalOpen(true)}>添加负责人</ButtonNoPadding>
+    { identity === "pm" && <ButtonNoPadding type="link" onClick={() => setIsModalOpen(true)}>添加负责人</ButtonNoPadding> }
   </div>
 
   return <div>

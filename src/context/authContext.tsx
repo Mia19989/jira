@@ -37,6 +37,7 @@ AuthContext.displayName = 'AuthContext';
 interface UserParams {
   username: string;
   password: string;
+  identity?: string;
 };
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {

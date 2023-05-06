@@ -1,13 +1,12 @@
 import React from "react";
 import ProjectTable from "./ProjectTable";
 import SearchBar from "./SearchBar";
-import styled from "@emotion/styled";
-import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjectModal, useProjectsSearchParams } from "./utils";
 import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from "../../components/lib";
+import * as auth from "../../auth-provider";
 
 const ProjectSys = () => {
   // const [, setParams] = useState({
@@ -26,6 +25,7 @@ const ProjectSys = () => {
   const {isLoading, data: list, error} = useProjects(debouncedVal);
   const { data: users } = useUsers();
   const {open} = useProjectModal();
+  const identity = auth.getAuthIdentity();
 
   // 使用hook封装请求 自动添加上登录信息token
   // const client = useHttp()
@@ -65,7 +65,7 @@ const ProjectSys = () => {
     <ScreenContainer>
       <Row spaceBetween>
         <h1>项目列表</h1>
-        <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding>
+        { identity === "pm" && <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding> }
       </Row>
       <SearchBar params={params} setParams={setParams} users={users || []} />
       <ErrorBox error={error} />

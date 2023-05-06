@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import { Form, Input, Modal, Button } from "antd";
+import { Form, Input, Modal, Button, Select } from "antd";
 import { useTaskModal, useTaskQueryKey } from "./utils";
 import { useDeleteTask, useEditTask } from "../../utils/task";
 import { UserSelect } from "../../components/UserSelect";
 import { TaskTypeSelect } from "../../components/TaskTypeSelect";
+import { useEpics } from "../../utils/epic";
+import { useEpicSearchParams } from "../epic/utils";
 
 const layout = {
   labelCol: {span: 8},
@@ -15,6 +17,8 @@ export const TaskModal = () => {
   const {mutateAsync: editTask, isLoading: editLoading} = useEditTask(useTaskQueryKey());
   const {mutate: deleteTask} = useDeleteTask(useTaskQueryKey());
   const [form] = Form.useForm();
+
+  const {data: epics} = useEpics(useEpicSearchParams());
 
   const onCancel = () => {
     form.resetFields();
@@ -47,6 +51,10 @@ export const TaskModal = () => {
     });
   }
 
+  const onChange = (value: any) => {
+    console.log('--选择的任务组', value);
+  }
+
   return <Modal forceRender={true} open={!!editingTaskId} title="编辑任务" cancelText="取消" okText="确定"
     confirmLoading={editLoading}
     onCancel={onCancel}
@@ -70,6 +78,21 @@ export const TaskModal = () => {
         name="typeId"
       >
         <TaskTypeSelect />
+      </Form.Item>
+
+      <Form.Item
+        label="任务组"
+        name="epicId"
+      >
+        <Select
+          placeholder="请选择归属的任务组"
+          onChange={onChange}
+          allowClear
+        >
+          {
+            epics?.map(item => <Select.Option value={item?.id}>{item?.name}</Select.Option>)
+          }
+        </Select>
       </Form.Item>
     </Form>
     <div style={{textAlign: 'right'}}>
