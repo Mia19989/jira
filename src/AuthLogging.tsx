@@ -56,8 +56,9 @@ const PageHeader = () => {
   return (
     <Header spaceBetween>
       <HeaderLeft marginRight>
-        <ButtonNoPadding type="link" onClick={resetRoute}>
-          <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
+        <ButtonNoPadding type="link" onClick={resetRoute} style={{fontSize: '1.17em'}}>
+          {/* <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} /> */}
+          首页
         </ButtonNoPadding>
         <ProjectPopover />
         <UserPopover />

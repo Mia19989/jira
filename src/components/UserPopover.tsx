@@ -24,7 +24,7 @@ const UserPopover = () => {
   </div>
 
   return <div>
-    <Popover onOpenChange={() => refetch()} placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >
+    <Popover onOpenChange={() => refetch()} placement="bottomLeft" content={content} overlayStyle={{ minWidth: '30rem' }} >
       <h3 style={{margin: 'auto'}}>负责人</h3>
     </Popover>
 

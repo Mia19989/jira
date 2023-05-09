@@ -26,7 +26,7 @@ const ProjectPopover = () => {
     { identity === "pm" && <ButtonNoPadding type="link" onClick={open}>创建项目</ButtonNoPadding> }
   </div>
 
-  return <Popover onOpenChange={() => refetch()} placement="bottom" content={content} overlayStyle={{ minWidth: '30rem' }} >
+  return <Popover onOpenChange={() => refetch()} placement="bottomLeft" content={content} overlayStyle={{ minWidth: '30rem' }} >
     <h3>项目</h3>
   </Popover>
 };
