@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Routes, Route, Navigate, useLocation } from "react-router";
-import KanbanScreen from "../kanban";
-import EpicScreen from "../epic";
 import styled from "@emotion/styled";
 import { Menu } from "antd";
+import KanbanScreen from "../kanban";
+import EpicScreen from "../epic";
+import ScheduleScreen from "../schedule";
 
 const useRouteType = () => {
   const type = useLocation().pathname.split('/');
@@ -24,12 +25,16 @@ export const ProjectScreen = () => {
           <Menu.Item key='epic'>
             <Link to={'epic'}>任务组</Link>
           </Menu.Item>
+          <Menu.Item key='schedule'>
+            <Link to={'schedule'}>项目进度</Link>
+          </Menu.Item>
         </Menu>
       </Aside>
       <Main>
         <Routes>
           <Route path="kanban" element={<KanbanScreen/>}></Route>
           <Route path="epic" element={<EpicScreen/>}></Route>
+          <Route path="schedule" element={<ScheduleScreen/>}></Route>
           <Route path="*" element={<Navigate to="kanban" replace={true} />}></Route>
         </Routes>
       </Main>
