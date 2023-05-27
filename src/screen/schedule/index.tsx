@@ -7,7 +7,6 @@ import TasksPieChart from './TasksPieChart';
 import { useEpics } from '../../utils/epic';
 import { useEpicSearchParams } from '../epic/utils';
 import { useTasks } from '../../utils/task';
-import { AnyCnameRecord } from 'dns';
 
 const ScheduleScreen = () => {
   useDocumentTitle('项目进度');
